@@ -40,7 +40,7 @@ entranceButton.addEventListener('click',async()=>{
  walkImage.style.width=rect.width+'px';walkImage.style.height=rect.height+'px';walkImage.style.left='0';walkImage.style.top='0';
  entranceButton.hidden=true;entrancePlayer.hidden=false;scene.classList.add('is-playing');document.body.classList.add('is-walking');
  // The vanishing point is the ground-level passage in the supplied building-6 image.
- const s=Math.max(W/rect.width,H/rect.height)*1.9,targetX=W*.5-rect.width*.53*s,targetY=H*.54-rect.height*.81*s;
+ const s=Math.max(Math.max(W/rect.width,H/rect.height)*1.9,H*.46/(rect.height*.19)*1.02),targetX=W*.5-rect.width*.53*s,targetY=H*.54-rect.height*.81*s;
  const frames=[{transform:`translate(${rect.left}px,${rect.top}px) scale(1)`}];
  for(let i=1;i<=8;i++){const t=i/8,p=t*t*(3-2*t),scale=1+(s-1)*p,bob=Math.sin(t*Math.PI*6)*2.3*Math.sin(t*Math.PI);frames.push({offset:t,transform:`translate(${rect.left+(targetX-rect.left)*p}px,${rect.top+(targetY-rect.top)*p+bob}px) scale(${scale})`})}
  walkAnimation=walkImage.animate(frames,{duration:reducedMotion()?0:1650,easing:'linear',fill:'forwards'});
