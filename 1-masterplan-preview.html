@@ -76,7 +76,7 @@ const reducedMotion=()=>window.matchMedia('(prefers-reduced-motion: reduce)').ma
 const diveTransform=(x,y,sc)=>'translate('+(50-x)+'%, '+(50-y)+'%) scale('+sc+')';
 function closeupSrc(n){if(n===10)return 'sunken-plaza.jpg';return n<3?'10-building-1-2.webp':(n+8)+'-building-'+n+'.webp'}
 function clearSelection(){document.querySelectorAll('[data-zone]').forEach(el=>{el.classList.remove('active');if(el.tagName==='BUTTON')el.setAttribute('aria-pressed','false')})}
-const ZONE_LABELS={1:'Branded Apartments',2:'Branded Apartments',3:'Branded Apartments',4:'Admin & Clinic',5:'Clinic',6:'Admin',7:'Commercial',8:'Commercial',9:'Commercial'};
+const ZONE_LABELS={1:'Branded Apartments',2:'Branded Apartments',3:'Branded Apartments',4:'Admin & Clinic',5:'Clinic',6:'Admin',7:'Commercial',8:'Commercial',9:'Commercial',10:'Sky Light'};
 const zoneTip=document.getElementById('zoneTip');
 if(window.matchMedia('(hover: hover)').matches){document.querySelectorAll('.zone').forEach(z=>{const show=e=>{if(canvas.classList.contains('is-closeup')||flying){zoneTip.hidden=true;return}const r=scene.getBoundingClientRect();zoneTip.textContent=ZONE_LABELS[z.dataset.zone]||'';if(!zoneTip.textContent){zoneTip.hidden=true;return}zoneTip.style.left=(e.clientX-r.left)+'px';zoneTip.style.top=(e.clientY-r.top)+'px';zoneTip.hidden=false};z.addEventListener('mousemove',show);z.addEventListener('mouseleave',()=>{zoneTip.hidden=true})});}
 function selectZone(n){
