@@ -18,7 +18,7 @@ const canvas=document.getElementById('canvas'), closeup=document.getElementById(
 const entranceButton=document.getElementById('entranceButton'), entrancePlayer=document.getElementById('entrancePlayer'), entranceVideo=document.getElementById('entranceVideo');
 const walkImage=document.getElementById('walkImage'),walkCaption=document.getElementById('walkCaption'),walkPlay=document.getElementById('walkPlay');
 let entranceRun=0,walkAnimation=null,walkDone=false,videoReady=false,videoRevealed=false;
-const ENTRANCES={5:{src:'1-1-19-building-5-entrance.mp4',x:.58,y:.78},6:{src:'1-18-building-6-entrance.mp4',x:.53,y:.81}};
+const ENTRANCES={5:{src:'1-1-19-building-5-entrance.mp4',x:.58,y:.78},6:{src:'1-18-building-6-entrance.mp4',x:.53,y:.81},8:{src:'3-building-8-entrance.mp4',x:.38,y:.81}};
 function syncEntrance(){entranceButton.setAttribute('aria-label','Entrance - ادخل مبنى '+selectedZone);entranceButton.hidden=!(ENTRANCES[selectedZone]&&!flying&&!canvas.classList.contains('is-loading')&&!scene.classList.contains('is-playing'))}
 function stopEntrance(){entranceRun++;if(walkAnimation){walkAnimation.cancel();walkAnimation=null}entrancePlayer.getAnimations({subtree:true}).forEach(a=>a.cancel());entranceVideo.pause();entranceVideo.onplaying=null;entrancePlayer.hidden=true;walkImage.hidden=false;walkPlay.hidden=true;walkCaption.hidden=false;entranceVideo.style.opacity='0';scene.classList.remove('is-playing');document.body.classList.remove('is-walking');entranceButton.hidden=true;if(entranceVideo.hasAttribute('src')){entranceVideo.removeAttribute('src');entranceVideo.load()}}
 async function revealEntrance(run){
