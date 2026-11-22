@@ -25,10 +25,11 @@ function stopEntrance(){entranceRun++;if(walkAnimation){walkAnimation.cancel();w
 async function revealEntrance(run){
  if(run!==entranceRun||!walkDone||!videoReady||videoRevealed)return;
  videoRevealed=true;walkCaption.hidden=true;walkPlay.hidden=true;
+ try{entranceVideo.currentTime=0}catch(e){}
  entranceVideo.style.opacity='1';
- const fade=walkImage.animate([{opacity:1},{opacity:0}],{duration:reducedMotion()?0:420,easing:'ease-in-out',fill:'forwards'});
- const appear=entranceVideo.animate([{transform:'scale(1.07)'},{transform:'scale(1)'}],{duration:reducedMotion()?0:900,easing:'cubic-bezier(.2,.6,.3,1)',fill:'backwards'});
- try{await entranceVideo.play()}catch(e){if(run===entranceRun)walkPlay.hidden=false}
+ const fade=walkImage.animate([{opacity:1},{opacity:0}],{duration:reducedMotion()?0:340,easing:'ease-out',fill:'forwards'});
+ const appear=entranceVideo.animate([{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:reducedMotion()?0:750,easing:'cubic-bezier(.16,.84,.3,1)',fill:'backwards'});
+ try{await entranceVideo.play()}catch(e){if(run===entranceRun){walkPlay.hidden=false;walkCaption.hidden=false;walkCaption.textContent='اضغط للمتابعة إلى المدخل';}}
  try{await fade.finished}catch(e){}
  if(run!==entranceRun)return;
  walkImage.hidden=true;fade.cancel();appear.finished.then(()=>appear.cancel()).catch(()=>{});
@@ -39,22 +40,29 @@ entranceButton.addEventListener('click',async()=>{
  entranceVideo.setAttribute('aria-label','جولة داخل مبنى '+selectedZone);
  setZoom(1);viewport.scrollTo(0,0);
  const rect=closeup.getBoundingClientRect(),W=window.innerWidth,H=window.innerHeight,run=++entranceRun;
- walkDone=false;videoReady=false;videoRevealed=false;walkImage.hidden=false;walkPlay.hidden=true;walkCaption.hidden=false;
- walkCaption.textContent='في اتجاه المدخل…';walkImage.src=closeup.currentSrc||closeup.src;
+ walkDone=false;videoReady=false;videoRevealed=false;walkImage.hidden=false;walkPlay.hidden=true;walkCaption.hidden=true;
+ walkImage.src=closeup.currentSrc||closeup.src;
  walkImage.style.width=rect.width+'px';walkImage.style.height=rect.height+'px';walkImage.style.left='0';walkImage.style.top='0';
  entranceButton.hidden=true;entrancePlayer.hidden=false;scene.classList.add('is-playing');document.body.classList.add('is-walking');
- // Aim the walk toward the selected building entrance.
- const s=Math.max(Math.max(W/rect.width,H/rect.height)*1.9,H*.46/(rect.height*.19)*1.02),targetX=W*.5-rect.width*entrance.x*s,targetY=H*.54-rect.height*entrance.y*s;
- const frames=[{transform:`translate(${rect.left}px,${rect.top}px) scale(1)`}];
- for(let i=1;i<=8;i++){const t=i/8,p=t*t*(3-2*t),scale=1+(s-1)*p,bob=Math.sin(t*Math.PI*6)*2.3*Math.sin(t*Math.PI);frames.push({offset:t,transform:`translate(${rect.left+(targetX-rect.left)*p}px,${rect.top+(targetY-rect.top)*p+bob}px) scale(${scale})`})}
- walkAnimation=walkImage.animate(frames,{duration:reducedMotion()?0:1650,easing:'linear',fill:'forwards'});
- // Start from the tap to keep mobile playback permission, then hold its first frame until arrival.
+ // Fast punch-in toward the entrance: one short ease-out zoom, no fake walk.
+ const s=Math.max(Math.max(W/rect.width,H/rect.height)*2.05,H*.5/(rect.height*.19)),targetX=W*.5-rect.width*entrance.x*s,targetY=H*.54-rect.height*entrance.y*s;
+ walkAnimation=walkImage.animate([
+  {transform:`translate(${rect.left}px,${rect.top}px) scale(1)`,offset:0},
+  {transform:`translate(${rect.left+(targetX-rect.left)*.62}px,${rect.top+(targetY-rect.top)*.62}px) scale(${1+(s-1)*.62})`,offset:.62},
+  {transform:`translate(${targetX}px,${targetY}px) scale(${s})`,offset:1}
+ ],{duration:reducedMotion()?0:520,easing:'cubic-bezier(.25,.7,.25,1)',fill:'forwards'});
+ // Play within the tap gesture to keep mobile playback permission, hold the first frame, then crossfade at the zoom's peak.
  entranceVideo.onplaying=()=>{if(run!==entranceRun)return;if(!videoRevealed){entranceVideo.pause();videoReady=true;revealEntrance(run)}};
- entranceVideo.src=entrance.src;
- const start=entranceVideo.play();if(start)start.catch(()=>{if(run!==entranceRun)return;walkPlay.hidden=false;walkCaption.textContent='اضغط للمتابعة إلى المدخل';});
+ if(entranceVideo.getAttribute('src')!==entrance.src){entranceVideo.preload='auto';entranceVideo.src=entrance.src}
+ const start=entranceVideo.play();if(start)start.catch(()=>{if(run!==entranceRun)return;walkPlay.hidden=false;walkCaption.hidden=false;walkCaption.textContent='اضغط للمتابعة إلى المدخل';});
  try{await walkAnimation.finished}catch(e){return}
- if(run!==entranceRun)return;walkDone=true;
- if(!videoReady&&!walkPlay.hidden)walkCaption.textContent='اضغط للمتابعة إلى المدخل';else if(!videoReady)walkCaption.textContent='جاري تجهيز المشهد…';
+ if(run!==entranceRun)return;
+ // If the clip is still late, keep a slow creep so the frame never stalls or cuts to black.
+ if(!videoReady&&walkPlay.hidden){
+  walkCaption.hidden=false;walkCaption.textContent='جاري تجهيز المشهد…';
+  walkAnimation=walkImage.animate([{transform:`translate(${targetX}px,${targetY}px) scale(${s})`},{transform:`translate(${targetX}px,${targetY}px) scale(${s*1.07})`}],{duration:1600,easing:'ease-out',fill:'forwards'});
+ }
+ walkDone=true;
  revealEntrance(run);
 });
 walkPlay.addEventListener('click',()=>{const run=entranceRun;entranceVideo.play().then(()=>{videoReady=true;walkPlay.hidden=true;revealEntrance(run)}).catch(()=>{walkPlay.hidden=false})});
@@ -82,7 +90,8 @@ function selectZone(n){
  syncEntrance();
  if(window.matchMedia('(max-width:850px)').matches)scene.scrollIntoView({behavior:'smooth',block:'start'});
 }
-function showImageReady(){if(selectedZone===null||closeup.hidden)return;setZoom(zoom);canvas.classList.remove('is-loading');note.textContent='المبنى '+selectedZone+' · صورة مقربة · الترقيم مبدئي';syncEntrance()}
+function preloadEntrance(){const e=ENTRANCES[selectedZone];if(!e||scene.classList.contains('is-playing')||videoRevealed)return;if(entranceVideo.getAttribute('src')!==e.src){entranceVideo.preload='auto';entranceVideo.src=e.src;entranceVideo.load()}}
+function showImageReady(){if(selectedZone===null||closeup.hidden)return;setZoom(zoom);canvas.classList.remove('is-loading');note.textContent='المبنى '+selectedZone+' · صورة مقربة · الترقيم مبدئي';syncEntrance();preloadEntrance()}
 closeup.addEventListener('load',showImageReady);
 closeup.addEventListener('error',()=>{canvas.classList.remove('is-loading');note.textContent='الصورة لم تتحمل. اختار رقم المبنى للمحاولة مرة تانية.'});
 function showMasterplan(){stopEntrance();selectedZone=null;canvas.classList.remove('is-closeup','is-loading');scene.classList.remove('is-closeup');closeup.hidden=true;backPlan.hidden=true;clearSelection();document.getElementById('sceneTitle').textContent='9NORTH / الماستر بلان';note.textContent=defaultNote;document.getElementById('zoneTitle').textContent='استكشف المخطط';document.getElementById('zoneText').textContent='دوس على أي مبنى عشان تفتح صورته المقربة. الأرقام الحالية مؤقتة.';document.getElementById('imageHint').textContent='الصور المقربة متاحة لكل المباني. اختار رقم أو دوس على المبنى في المخطط.';setZoom(1);viewport.scrollTo(0,0)}
