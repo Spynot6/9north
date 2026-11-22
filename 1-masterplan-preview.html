@@ -43,8 +43,8 @@ async function cinematicToZone(n){
  if(fromMaster){
   setZoom(1);viewport.scrollTo(0,0);
   canvas.style.transformOrigin=pos[0]+'% '+pos[1]+'%';
-  const dive=canvas.animate([{transform:'translate(0%, 0%) scale(1)',filter:'blur(0px) brightness(1)'},{transform:diveTransform(pos[0],pos[1],2.7),filter:'blur(7px) brightness(1.12)'}],{duration:900,easing:'cubic-bezier(.55,.06,.68,.19)',fill:'forwards'});
-  veil.animate([{opacity:0},{opacity:0,offset:.45},{opacity:.92}],{duration:900,easing:'ease-in',fill:'forwards'});
+  const dive=canvas.animate([{transform:'translate(0%, 0%) scale(1)'},{transform:diveTransform(pos[0],pos[1],2.7)}],{duration:550,easing:'cubic-bezier(.55,.06,.68,.19)',fill:'forwards'});
+  veil.animate([{opacity:0},{opacity:0,offset:.45},{opacity:.92}],{duration:550,easing:'ease-in',fill:'forwards'});
   try{await dive.finished}catch(e){}
   dive.cancel();canvas.style.transformOrigin='';
  }else{
@@ -52,8 +52,12 @@ async function cinematicToZone(n){
   try{await vin.finished}catch(e){}
  }
  selectZone(n);
- closeup.animate([{transform:'scale(1.1)',filter:'blur(9px)',opacity:.4},{transform:'scale(1)',filter:'blur(0px)',opacity:1}],{duration:650,easing:'cubic-bezier(.16,.84,.3,1)',fill:'backwards'});
- veil.animate([{opacity:.92},{opacity:0}],{duration:430,easing:'ease-out',fill:'forwards'});
+ const landing=closeup.animate([{transform:'scale(1.1)',opacity:.4},{transform:'scale(1)',opacity:1}],{duration:320,easing:'cubic-bezier(.16,.84,.3,1)',fill:'backwards'});
+ veil.animate([{opacity:.92},{opacity:0}],{duration:280,easing:'ease-out',fill:'forwards'});
+ try{await landing.finished}catch(e){}
+ landing.cancel();
+ closeup.getAnimations().forEach(animation=>animation.cancel());
+ veil.getAnimations().forEach(animation=>animation.cancel());
  flying=false;scene.classList.remove('is-flying');
 }
 async function cinematicToMaster(){
@@ -62,14 +66,17 @@ async function cinematicToMaster(){
  flying=true;scene.classList.add('is-flying');
  const pos=MARKER_POS[selectedZone];
  note.textContent='بنرجع للماستر بلان…';
- const rise=closeup.animate([{transform:'scale(1)',filter:'blur(0px)',opacity:1},{transform:'scale(1.14)',filter:'blur(8px)',opacity:.5}],{duration:420,easing:'cubic-bezier(.5,.05,.75,.4)',fill:'forwards'});
- veil.animate([{opacity:0},{opacity:.9}],{duration:420,easing:'ease-in',fill:'forwards'});
+ const rise=closeup.animate([{transform:'scale(1)',opacity:1},{transform:'scale(1.14)',opacity:.5}],{duration:300,easing:'cubic-bezier(.5,.05,.75,.4)',fill:'forwards'});
+ veil.animate([{opacity:0},{opacity:.9}],{duration:300,easing:'ease-in',fill:'forwards'});
  try{await rise.finished}catch(e){}
+ rise.cancel();
  showMasterplan();
  canvas.style.transformOrigin=pos[0]+'% '+pos[1]+'%';
- const ascend=canvas.animate([{transform:diveTransform(pos[0],pos[1],2.3),filter:'blur(6px) brightness(1.08)'},{transform:'translate(0%, 0%) scale(1)',filter:'blur(0px) brightness(1)'}],{duration:800,easing:'cubic-bezier(.22,.61,.36,1)',fill:'backwards'});
- veil.animate([{opacity:.9},{opacity:0}],{duration:750,easing:'ease-out',fill:'forwards'});
+ const ascend=canvas.animate([{transform:diveTransform(pos[0],pos[1],2.3)},{transform:'translate(0%, 0%) scale(1)'}],{duration:550,easing:'cubic-bezier(.22,.61,.36,1)',fill:'backwards'});
+ veil.animate([{opacity:.9},{opacity:0}],{duration:500,easing:'ease-out',fill:'forwards'});
  try{await ascend.finished}catch(e){}
+ ascend.cancel();
+ veil.getAnimations().forEach(animation=>animation.cancel());
  canvas.style.transformOrigin='';
  flying=false;scene.classList.remove('is-flying');
 }
