@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#eae9e0"><title>9NORTH | تصور تفاعلي 360°</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:#eae9e0;color:#25382f;font-family:Tahoma,Arial,sans-serif}button,select{font:inherit;cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid #9e6837;outline-offset:2px}button{border:1px solid #d5d8cb;background:#fffef8;color:#35483b;border-radius:12px;min-height:42px;padding:9px 15px;white-space:nowrap}button:hover{background:#eff1e6}button.on{background:#354f40;color:#fff;border-color:#354f40}header{position:absolute;top:0;left:0;right:0;z-index:2;padding:19px 26px 0;pointer-events:none}.head{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-family:Arial,sans-serif;letter-spacing:3px;font-size:24px;font-weight:700;direction:ltr}.brand small{font-size:10px;letter-spacing:2px;display:block;color:#657263;margin-top:4px}.tag{font-size:11px;border:1px solid #b8bfac;border-radius:30px;padding:7px 11px;background:#f5f4eaaa}.notice{margin-top:12px;max-width:600px;font-size:11px;line-height:1.8;color:#676b58}.notice b{color:#8b592c}#view{position:absolute;inset:110px 0 207px;touch-action:none;outline:none}canvas{display:block;width:100%;height:100%}.caption{position:absolute;top:4px;left:26px;pointer-events:none;color:#6d7868;font-size:11px;direction:ltr;letter-spacing:1px}#status{position:absolute;bottom:12px;left:16px;right:16px;text-align:center;font-size:12px;pointer-events:none;color:#52634f}#status span{display:inline-block;border-radius:30px;background:#fffdf0df;border:1px solid #dce0cd;padding:8px 14px}#panel{position:absolute;bottom:0;left:0;right:0;padding:12px 26px 16px;background:#f8f8f0;border-top:1px solid #d9ddcf;z-index:3}.panelhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.panelhead strong{font-size:15px}.panelhead small{font-size:11px;color:#74816f;margin-right:9px}#angle{font-family:Arial,sans-serif;font-size:12px;direction:ltr;color:#687664}.buildings{display:flex;gap:7px;overflow:auto;padding-bottom:8px;scrollbar-width:thin}.buildings button{flex:1;min-width:51px;padding:8px 13px;font-family:Arial,sans-serif;font-weight:bold}.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px}.controls select{height:42px;background:#fffef8;border:1px solid #d5d8cb;border-radius:12px;color:#35483b;padding:0 10px;max-width:150px}.spacer{flex:1}.icon{font-size:19px;min-width:42px;padding:6px 12px}.hint{font-size:10px;color:#828970;margin-top:10px;display:flex;justify-content:space-between;gap:10px}.hint a{color:#64775d;text-decoration:none}#kind{display:inline-block;direction:ltr;margin-left:6px;color:#6a785f;font-weight:400;font-size:12px;margin-right:8px}#fallback{display:none;position:absolute;inset:35%;font-size:14px;text-align:center}@media(max-width:600px){header{padding:13px 16px 0}.brand{font-size:21px}.tag{font-size:10px;padding:6px 9px}.notice{font-size:10px;margin-top:8px;line-height:1.75}#view{inset:110px 0 249px}.caption{left:16px;font-size:9px}#panel{padding:11px 14px 12px}.panelhead{margin-bottom:9px}.panelhead small{display:none}#kind{font-size:10px;margin-right:3px}.buildings button{min-width:35px;padding:8px;flex:1}.buildings{gap:4px}.controls{gap:6px}.controls button{padding:8px 11px;font-size:12px}.controls .icon{font-size:17px;min-width:37px;padding:6px 9px}.controls select{font-size:12px;max-width:124px}.spacer{display:none}.hint{font-size:9px;line-height:1.7}.controls .primary{flex:1}.hint span{max-width:73%}#status{font-size:10px;bottom:5px}.panelhead strong{font-size:13px}}@media(max-height:550px){header{padding-top:8px}.notice{max-width:65%;font-size:9px;margin-top:3px}.brand{font-size:18px}.brand small{display:none}#view{inset:70px 0 145px}#panel{padding:7px 16px}.panelhead{margin-bottom:4px}.buildings{position:absolute;right:16px;top:-48px;left:16px;justify-content:center;pointer-events:none}.buildings button{flex:0;min-height:34px;padding:5px 12px;pointer-events:auto}.hint{margin-top:5px}.controls{margin-top:0}#status{bottom:50px}}
+</style></head><body>
+<header><div class="head"><div class="brand">9NORTH<small>SPATIAL STUDY / 01</small></div><div class="tag">تصوّر تجريبي · مش مخطط معتمد</div></div><div class="notice"><b>نموذج من الخيال لاختبار الفكرة.</b> الكتل والمواقع والارتفاعات وتقسيمات الأدوار والإطلالات توضيحية، وليست بيانات أو تصميمات معتمدة للمشروع.</div></header>
+<main id="view" tabindex="0" aria-label="مجسم تفاعلي. اسحب للدوران واضغط مبنى لعرض مسقطه. استخدم أزرار المباني كبديل."><canvas id="scene"></canvas><div class="caption">360° ORBIT · SCHEMATIC MODEL</div><div id="status"><span>اسحب عشان تلف المشروع · اضغط مبنى عشان تفتح مسقطه</span></div></main>
+<section id="panel" aria-label="التحكم في النموذج"><div class="panelhead"><div><strong id="title">اختار مبنى</strong><span id="kind"></span><small>المسقط يظهر في مكانه وسط المجسم</small></div><div id="angle">ORBIT 000°</div></div><div class="buildings" id="buildings" aria-label="اختيار المبنى"></div><div class="controls"><button id="plan" class="primary">إظهار المسقط 2D</button><select id="floor" aria-label="اختيار دور توضيحي" disabled></select><button id="top">من أعلى</button><div class="spacer"></div><button class="icon" id="left" aria-label="لف 45 درجة لليسار">↶</button><button class="icon" id="right" aria-label="لف 45 درجة لليمين">↷</button><button class="icon" id="plus" aria-label="تكبير">+</button><button class="icon" id="minus" aria-label="تصغير">−</button><button id="reset">البداية</button></div><div class="hint"><span>الدور وتقسيماته أمثلة فقط · اسحب للدوران، وقرّب بإصبعين أو بعجلة الماوس</span><a href="1-masterplan-preview.html">الموقع الأصلي ↗</a></div></section>
+<script>
+'use strict';
+const canvas=document.getElementById('scene'),ctx=canvas.getContext('2d'),view=document.getElementById('view');
+const $=id=>document.getElementById(id), TAU=Math.PI*2;
+// All geometry, room layouts and floor counts below are invented demonstration data.
+const buildings=[
+{id:1,x:-39,z:-5,w:15,d:27,n:5,type:'Branded Apartments',col:'#b9c4b0'},
+{id:2,x:-18,z:-13,w:17,d:44,n:5,type:'Branded Apartments',col:'#b9c4b0'},
+{id:3,x:5,z:-12,w:16,d:35,n:5,type:'Branded Apartments',col:'#b9c4b0'},
+{id:4,x:-20,z:-48,w:43,d:13,n:5,type:'إداري وطبي',col:'#c3c6b7'},
+{id:5,x:28,z:-43,w:34,d:15,n:5,type:'طبي',col:'#c3c6b7'},
+{id:6,x:30,z:-15,w:26,d:19,n:5,type:'إداري',col:'#c3c6b7'},
+{id:7,x:42,z:15,w:16,d:21,n:2,type:'تجاري',col:'#ccbca4'},
+{id:8,x:17,z:35,w:31,d:16,n:2,type:'تجاري',col:'#ccbca4'},
+{id:9,x:-20,z:39,w:34,d:21,n:2,type:'تجاري',col:'#ccbca4'}];
+let yaw=-.57,pitch=.70,zoom=1,selected=1,plan=false,floor=1,W=0,H=0,scale=1,dirty=true,faces=[],hits=[],labelHits=[],drag=null,pointers=new Map(),pinch=null;
+const initial={yaw:-.57,pitch:.70};
+function project(p){const c=Math.cos(yaw),s=Math.sin(yaw),xx=p[0]*c-p[2]*s,zz=p[0]*s+p[2]*c;return [W/2+xx*scale,H*.57+(zz*Math.sin(pitch)-p[1]*Math.cos(pitch))*scale,zz*Math.cos(pitch)+p[1]*Math.sin(pitch)];}
+function poly(points,fill,stroke,id=0,line=1){const p=points.map(project);faces.push({p,fill,stroke,id,line,depth:p.reduce((a,b)=>a+b[2],0)/p.length});}
+function rect(x,z,w,d,y,fill,stroke,id=0){poly([[x,y,z],[x+w,y,z],[x+w,y,z+d],[x,y,z+d]],fill,stroke,id);}
+function box(x,z,w,d,y,h,colors,id=0){const a=[x,y,z],b=[x+w,y,z],c=[x+w,y,z+d],d0=[x,y,z+d],A=[x,y+h,z],B=[x+w,y+h,z],C=[x+w,y+h,z+d],D=[x,y+h,z+d];poly([a,b,B,A],colors[1],null,id);poly([b,c,C,B],colors[2],null,id);poly([c,d0,D,C],colors[2],null,id);poly([d0,a,A,D],colors[1],null,id);poly([A,B,C,D],colors[0],null,id);}
+function line(a,b,color,width=1){const p=[project(a),project(b)];faces.push({p,stroke:color,line:width,depth:(p[0][2]+p[1][2])/2+.03});}
+function tree(x,z,h=3.8){box(x-.2,z-.2,.4,.4,0,1.6,['#a2a58c','#a2a58c','#a2a58c']);box(x-1.15,z-1.15,2.3,2.3,1.3,h-1.3,['#97a583','#718a64','#80966f']);}
+function architecturalBlock(b){const x=b.x-b.w/2,z=b.z-b.d/2,cut=plan&&selected===b.id,y=cut?floor*4+.7:0,h=cut?Math.max(.5,y):b.n*4;const accent=selected===b.id?'#a77d45':null;
+rect(x+1.8,z+1.8,b.w+1,b.d+1,.07,'#b7bcad');
+box(x,z,b.w,b.d,0,h,[b.col,'#a7b0a0','#929e91'],b.id);
+// Projected window panes on all four real vertical sides.
+for(let k=0;k<Math.floor(h/4);k++){
+let yy=k*4+1.1;
+for(let xx=x+1;xx<x+b.w-1;xx+=2.6){poly([[xx,yy,z-.025],[xx+1.4,yy,z-.025],[xx+1.4,yy+2,z-.025],[xx,yy+2,z-.025]],'#718c8e',null,b.id);poly([[xx,yy,z+b.d+.025],[xx+1.4,yy,z+b.d+.025],[xx+1.4,yy+2,z+b.d+.025],[xx,yy+2,z+b.d+.025]],'#849b99',null,b.id);}
+for(let zz=z+1;zz<z+b.d-1;zz+=2.6){poly([[x-.025,yy,zz],[x-.025,yy,zz+1.4],[x-.025,yy+2,zz+1.4],[x-.025,yy+2,zz]],'#849b99',null,b.id);poly([[x+b.w+.025,yy,zz],[x+b.w+.025,yy,zz+1.4],[x+b.w+.025,yy+2,zz+1.4],[x+b.w+.025,yy+2,zz]],'#718c8e',null,b.id);}
+rect(x-.15,z-.15,b.w+.3,b.d+.3,k*4+.45,'#d7d9cc',null,b.id);
+}
+if(cut){const start=faces.length;floorplan(b,x,z,y+.14);const dd=Math.max(...[[x,y,z],[x+b.w,y,z],[x+b.w,y,z+b.d],[x,y,z+b.d]].map(p=>project(p)[2]))+.3;for(let f of faces.slice(start))f.depth=dd;}else{
+rect(x-.25,z-.25,b.w+.5,b.d+.5,h+.05,'#e9e8db',accent,b.id);
+rect(x+1.6,z+1.6,b.w-3.2,b.d-3.2,h+.08,'#c7cbb9',null,b.id);
+box(x+b.w*.35,z+b.d*.35,b.w*.3,b.d*.3,h+.1,1.4,['#e7e7dc','#c8cabc','#b3bcab'],b.id);
+rect(x+1.9,z+2,b.w*.18,b.d*.34,h+.13,'#95a582',null,b.id);
+if(b.id<4){rect(x+b.w*.7,z+2,b.w*.16,b.d*.35,h+.15,'#80afbd',null,b.id);}
+}
+if(selected===b.id){let yy=cut?y+.21:h+.12; const corners=[[x-.4,yy,z-.4],[x+b.w+.4,yy,z-.4],[x+b.w+.4,yy,z+b.d+.4],[x-.4,yy,z+b.d+.4]];for(let j=0;j<4;j++)line(corners[j],corners[(j+1)%4],'#a77435',2.5);}
+}
+function floorplan(b,x,z,y){const w=b.w,d=b.d;rect(x,z,w,d,y,'#fff8de',null,b.id);
+const corridor=2.2,mid=x+w/2;
+rect(mid-corridor/2,z+.5,corridor,d-1,y+.04,'#e1e2d0',null,b.id);
+const rows=b.id>6?2:3,step=(d-1)/rows;
+for(let side=0;side<2;side++)for(let r=0;r<rows;r++){
+let rx=side===0?x+.55:mid+corridor/2+.25,rz=z+.5+r*step,rw=w/2-corridor/2-.8,rd=step-.35;
+rect(rx,rz,rw,rd,y+.05,(r+side)%2?'#d8e3d5':'#e9ddbf',null,b.id);
+// Dark plan partition strokes and smaller service rooms, drawn in the same horizontal plane.
+const edges=[[[rx,y+.09,rz],[rx+rw,y+.09,rz]],[[rx,y+.09,rz+rd],[rx+rw,y+.09,rz+rd]],[[rx,y+.09,rz],[rx,y+.09,rz+rd]],[[rx+rw,y+.09,rz],[rx+rw,y+.09,rz+rd]]];edges.forEach(e=>line(e[0],e[1],'#52645a',1.35));
+let sx=side===0?rx:rx+rw*.58;rect(sx,rz,rw*.42,rd*.32,y+.08,'#c2d4d1',null,b.id);line([sx,y+.11,rz+rd*.32],[sx+rw*.42,y+.11,rz+rd*.32],'#657568',1);line([side===0?sx+rw*.42:sx,y+.11,rz],[side===0?sx+rw*.42:sx,y+.11,rz+rd*.32],'#657568',1);
+}
+// Core with stair treads. No dimensions, prices or real unit identifiers.
+rect(mid-1.0,z+d/2-2,2,4,y+.15,'#f1ead2','#8a9278',b.id);
+for(let k=0;k<6;k++)line([mid-.8,y+.19,z+d/2-1.7+k*.58],[mid+.8,y+.19,z+d/2-1.7+k*.58],'#6f7c69',.8);
+}
+function draw(){dirty=false;faces=[];hits=[];labelHits=[];ctx.clearRect(0,0,W,H);scale=Math.min(W/(W<600?180:155),H/128)*zoom;
+rect(-68,-67,136,134,-1.2,'#d5d9ca');rect(-61,-60,122,120,-1.05,'#c4cbbc');
+// Schematic peripheral streets, never presented as actual geography.
+rect(-60,-59,120,7,-.95,'#adb7ac');rect(-60,51,120,7,-.95,'#adb7ac');rect(-60,-52,7,103,-.95,'#adb7ac');rect(53,-52,7,103,-.95,'#adb7ac');
+for(let i=-53;i<53;i+=8){rect(i,-56,.25+3,.18,-.9,'#dfe2d5');rect(i,54,3,.18,-.9,'#dfe2d5');rect(-57,i,.18,3,-.9,'#dfe2d5');rect(56,i,.18,3,-.9,'#dfe2d5');}
+rect(-51,-51,102,101,-.75,'#dfdfd0');
+rect(-7,10,37,12,-.65,'#c7cfb5');rect(3,11,20,9,-.6,'#92b3ad');rect(-7,9,4,15,-.5,'#bcc7a7');
+const groundFaces=faces;faces=[];
+for(let x=-48;x<53;x+=9){tree(x,-63,3);tree(x,62,3);}for(let z=-45;z<46;z+=10){tree(-65,z,3.4);tree(65,z,3.4);}for(let x=-44;x<41;x+=11){tree(x,24,2.2);}tree(23,5,2.8);tree(27,9,2.8);
+buildings.forEach(architecturalBlock);
+faces.sort((a,b)=>a.depth-b.depth);faces=[...groundFaces,...faces];
+for(const f of faces){ctx.beginPath();f.p.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));if(f.p.length>2)ctx.closePath();if(f.fill){ctx.fillStyle=f.fill;ctx.fill();}if(f.stroke){ctx.strokeStyle=f.stroke;ctx.lineWidth=f.line;ctx.lineJoin='round';ctx.stroke();}if(f.id&&f.p.length>2)hits.push(f);}
+// Number pins keep selection usable on narrow phones at every orbit angle.
+for(const b of [...buildings].sort((a,b)=>project([a.x,0,a.z])[2]-project([b.x,0,b.z])[2])){
+let y=plan&&selected===b.id?floor*4+2:b.n*4+3;let p=project([plan&&selected===b.id?b.x-b.w/2:b.x,y,plan&&selected===b.id?b.z-b.d/2:b.z]);ctx.beginPath();ctx.arc(p[0],p[1],12,0,TAU);ctx.fillStyle=b.id===selected?'#395440':'#fffff0';ctx.fill();ctx.lineWidth=1;ctx.strokeStyle='#aeb8a2';ctx.stroke();ctx.fillStyle=b.id===selected?'#fffcec':'#4c604b';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='bold 11px Arial';ctx.fillText(b.id,p[0],p[1]+.3);labelHits.push({x:p[0],y:p[1],id:b.id});}
+$('angle').textContent='ORBIT '+String((Math.round((yaw-initial.yaw)*180/Math.PI)%360+360)%360).padStart(3,'0')+'°';
+}
+function frame(){if(dirty)draw();requestAnimationFrame(frame);}function invalidate(){dirty=true;}
+function resize(){W=view.clientWidth;H=view.clientHeight;const r=Math.min(window.devicePixelRatio||1,1.75);canvas.width=W*r;canvas.height=H*r;ctx.setTransform(r,0,0,r,0,0);invalidate();}new ResizeObserver(resize).observe(view);
+function ui(){const b=buildings[selected-1];$('title').textContent='مبنى '+selected;$('kind').textContent=b.type;document.querySelectorAll('#buildings button').forEach((el,i)=>{el.classList.toggle('on',i+1===selected);el.setAttribute('aria-pressed',i+1===selected)});$('plan').textContent=plan?'رجّع المبنى 3D':'إظهار المسقط 2D';$('plan').classList.toggle('on',plan);$('plan').setAttribute('aria-pressed',plan);$('floor').disabled=!plan;$('floor').innerHTML='';for(let i=0;i<b.n;i++){const opt=document.createElement('option');opt.value=i;opt.textContent=i===0?'أرضي توضيحي':'دور '+i+' توضيحي';$('floor').append(opt);}$('floor').value=floor;$('status').innerHTML='<span>'+(plan?'مسقط تخيّلي في مكان المبنى · المباني المحيطة تظل 3D':'اسحب عشان تلف المشروع · اضغط مبنى عشان تفتح مسقطه')+'</span>';invalidate();}
+function choose(id){selected=id;floor=Math.min(floor,buildings[id-1].n-1);plan=true;ui();}
+for(const b of buildings){const el=document.createElement('button');el.textContent=b.id;el.setAttribute('aria-label','مبنى '+b.id+'، '+b.type);el.onclick=()=>choose(b.id);$('buildings').append(el);}
+$('plan').onclick=()=>{plan=!plan;ui();};$('floor').onchange=e=>{floor=Number(e.target.value);invalidate();};$('left').onclick=()=>{yaw-=Math.PI/4;invalidate();};$('right').onclick=()=>{yaw+=Math.PI/4;invalidate();};$('top').onclick=()=>{pitch=pitch>1.3?.70:1.47;invalidate();};$('plus').onclick=()=>{zoom=Math.min(2.5,zoom*1.16);invalidate();};$('minus').onclick=()=>{zoom=Math.max(.65,zoom/1.16);invalidate();};$('reset').onclick=()=>{yaw=initial.yaw;pitch=initial.pitch;zoom=1;plan=false;selected=1;floor=1;ui();};
+function inside(x,y,p){let c=false;for(let i=0,j=p.length-1;i<p.length;j=i++){if(((p[i][1]>y)!=(p[j][1]>y))&&(x<(p[j][0]-p[i][0])*(y-p[i][1])/(p[j][1]-p[i][1])+p[i][0]))c=!c;}return c;}
+canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);pointers.set(e.pointerId,[e.clientX,e.clientY]);drag={x:e.clientX,y:e.clientY,ox:e.clientX,oy:e.clientY,moved:false};if(pointers.size===2){let p=[...pointers.values()];pinch={distance:Math.hypot(p[0][0]-p[1][0],p[0][1]-p[1][1]),zoom};}});
+canvas.addEventListener('pointermove',e=>{if(!pointers.has(e.pointerId))return;pointers.set(e.pointerId,[e.clientX,e.clientY]);if(pointers.size===2&&pinch){let p=[...pointers.values()];zoom=Math.max(.65,Math.min(2.5,pinch.zoom*Math.hypot(p[0][0]-p[1][0],p[0][1]-p[1][1])/pinch.distance));drag.moved=true;}else if(drag){let dx=e.clientX-drag.x,dy=e.clientY-drag.y;yaw+=dx*.009;pitch=Math.max(.3,Math.min(1.5,pitch+dy*.005));if(Math.hypot(e.clientX-drag.ox,e.clientY-drag.oy)>5)drag.moved=true;drag.x=e.clientX;drag.y=e.clientY;}invalidate();});
+function up(e){pointers.delete(e.pointerId);if(drag&&!drag.moved&&e.type!=='pointercancel'&&!pinch){let r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;let label=[...labelHits].reverse().find(p=>Math.hypot(x-p.x,y-p.y)<18);if(label)choose(label.id);else{let f=[...hits].reverse().find(f=>inside(x,y,f.p));if(f)choose(f.id);}}if(pointers.size===0){drag=null;pinch=null;}}
+canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.65,Math.min(2.5,zoom*Math.exp(-e.deltaY*.001)));invalidate();},{passive:false});view.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();if(e.key==='ArrowLeft')yaw-=.16;if(e.key==='ArrowRight')yaw+=.16;if(e.key==='ArrowUp')pitch=Math.min(1.5,pitch+.1);if(e.key==='ArrowDown')pitch=Math.max(.3,pitch-.1);invalidate();}});
+window.prototypeState=()=>({yaw,pitch,zoom,selected,plan,floor,faces:faces.length,width:W,height:H});ui();resize();frame();
+</script></body></html>
