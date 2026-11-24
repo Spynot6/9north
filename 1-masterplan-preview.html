@@ -238,7 +238,7 @@ if(window.matchMedia('(hover: hover)').matches){
  invHover.addEventListener('mouseleave',hideInvHoverSoon);
 }
 function syncInvCloseup(){const show=invAvailable(selectedZone)&&!flying;invCloseup.hidden=!show}
-function openPaper(n){if(!invAvailable(n))return;paperTitle.textContent='مبنى '+n;paperSub.textContent=(ZONE_LABELS[n]||'')+' · الوحدات المتاحة';paperVeil.hidden=false;invHover.hidden=true;paperClose.focus()}
+function openPaper(n){if(!invAvailable(n))return;location.href='./?v=5&building='+encodeURIComponent(n);return;paperTitle.textContent='مبنى '+n;paperSub.textContent=(ZONE_LABELS[n]||'')+' · الوحدات المتاحة';paperVeil.hidden=false;invHover.hidden=true;paperClose.focus()}
 function closePaper(){paperVeil.hidden=true}
 invHover.addEventListener('click',()=>openPaper(invHoverZone));
 invCloseup.addEventListener('click',()=>openPaper(selectedZone));
