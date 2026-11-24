@@ -306,5 +306,25 @@ bmenu.addEventListener('mouseenter',()=>clearTimeout(invHideTimer));
 bmenu.addEventListener('mouseleave',hideInvHoverSoon);
 bmUse.addEventListener('click',()=>{const n=bmZone;bmenu.hidden=true;invHover.hidden=true;if(n)cinematicToZone(n)});
 bmInv.addEventListener('click',()=>{if(bmZone)openPaper(bmZone);bmenu.hidden=true});
-bmFp.addEventListener('click',()=>{if(bmZone===8){bmenu.hidden=true;invHover.hidden=true;openPlan()}else{bmNote.hidden=false}});
+/* Floor Plan side list: floors by building category. Only building 8 has a supplied plan (its floor is not established yet). */
+const FLOOR_CATS={commercial:{ar:'التجاري',floors:['Ground','First','Roof']},hotel:{ar:'الفندقي',floors:['Ground','First','Second','Third','Fourth']},office:{ar:'المكاتب والعيادات',floors:['Ground','First','Second','Third','Fourth']}};
+const ZONE_CAT={1:'hotel',2:'hotel',3:'hotel',4:'office',5:'office',6:'office',7:'commercial',8:'commercial',9:'commercial'};
+const FLOOR_PLANS={}; /* {building:{FloorName:true}} filled only when a real plan is supplied for that floor */
+const UNASSIGNED_PLAN={8:true}; /* building 8 plan supplied, floor not yet identified */
+const fmenu=document.createElement('div');fmenu.className='bmenu fmenu';fmenu.hidden=true;scene.appendChild(fmenu);
+function buildFmenu(n){const c=FLOOR_CATS[ZONE_CAT[n]];if(!c)return false;fmenu.innerHTML='';
+ const h=document.createElement('div');h.className='bm-use fm-head';h.textContent=c.ar;h.style.direction='rtl';fmenu.appendChild(h);
+ if(UNASSIGNED_PLAN[n]){const b=document.createElement('button');b.type='button';b.className='fm-unassigned';b.textContent='المسقط المرسل (الدور غير محدد)';b.style.cssText='direction:rtl;font-family:inherit;font-size:12px';b.addEventListener('click',()=>{bmenu.hidden=true;fmenu.hidden=true;invHover.hidden=true;openPlan()});fmenu.appendChild(b)}
+ c.floors.forEach(f=>{const b=document.createElement('button');b.type='button';b.textContent=f;const has=FLOOR_PLANS[n]&&FLOOR_PLANS[n][f];b.setAttribute('aria-disabled',has?'false':'true');if(!has)b.style.opacity='.55';
+  b.addEventListener('click',()=>{if(has){bmenu.hidden=true;fmenu.hidden=true;invHover.hidden=true;openPlan()}else{fmNote.hidden=false}});fmenu.appendChild(b)});
+ const note=document.createElement('div');note.className='bm-note';note.hidden=true;note.textContent='المسقط ده مش متاح لسه';fmenu.appendChild(note);fmNote=note;return true}
+let fmNote={hidden:true};
+function placeFmenu(){const sr=scene.getBoundingClientRect(),br=bmenu.getBoundingClientRect(),fr=bmFp.getBoundingClientRect();const mw=fmenu.offsetWidth,mh=fmenu.offsetHeight;const zr=document.querySelector('.zone[data-zone="'+bmZone+'"]').getBoundingClientRect();
+ const bmRight=br.left>=zr.left+zr.width/2;let x=bmRight?br.right-sr.left+8:br.left-sr.left-mw-8;if(x<8||x+mw>sr.width-8){x=bmRight?br.left-sr.left-mw-8:br.right-sr.left+8}x=Math.max(8,Math.min(x,sr.width-mw-8));
+ let y=fr.top-sr.top-6;y=Math.max(8,Math.min(y,sr.height-mh-8));fmenu.style.left=x+'px';fmenu.style.top=y+'px'}
+bmFp.addEventListener('click',()=>{if(fmenu.hidden||fmenu.dataset.z!=String(bmZone)){if(buildFmenu(bmZone)){fmenu.dataset.z=bmZone;fmenu.hidden=false;placeFmenu()}}else{fmenu.hidden=true}bmNote.hidden=true});
+new MutationObserver(()=>{if(bmenu.hidden)fmenu.hidden=true}).observe(bmenu,{attributes:true,attributeFilter:['hidden']});
+fmenu.addEventListener('mouseenter',()=>clearTimeout(invHideTimer));fmenu.addEventListener('mouseleave',hideInvHoverSoon);
+bmenu.addEventListener('mouseenter',()=>{});
+
 </script></body></html>
