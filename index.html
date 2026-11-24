@@ -682,6 +682,12 @@ loadUnits(false);
  document.getElementById('bldTitle').textContent='9NORTH · مبنى '+n+' ('+uses[n]+')';
  document.getElementById('bldMsg').textContent='بيانات وحدات المبنى ده لسه ما اتضافتش في المولد، فمفيش وحدات متاحة معروضة له دلوقتي (ده مش معناه إنه مخلص). الوحدات اللي تحت تخص مشاريع تانية (Halo / Meray 2).';
  document.getElementById('bldBanner').hidden=false;
+ var st=document.createElement('style');st.id='bldCtxStyle';st.textContent='body.bld-ctx .wrap>*:not(#bldBanner){display:none!important}body.bld-ctx .hero-art{display:none}';document.head.appendChild(st);
+ document.body.classList.add('bld-ctx');
+ document.getElementById('bldMsg').textContent='بيانات وحدات المبنى ده لسه ما اتضافتش، فمفيش وحدات معروضة له دلوقتي. (ده مش معناه إنه مخلص.)';
+ var b=document.createElement('button');b.type='button';b.textContent='فتح المولد العام (Halo / Meray 2)';b.style.cssText='margin-top:10px;margin-right:14px;padding:6px 12px;border:1px solid #c9a96b;background:transparent;border-radius:6px;font-size:12px;cursor:pointer;color:#3a2a1a';
+ b.onclick=function(){document.body.classList.remove('bld-ctx');document.getElementById('bldBanner').hidden=true};
+ document.getElementById('bldBanner').appendChild(b);
 })();
 </script>
 </body>
