@@ -70,6 +70,14 @@
 .fm-sheet{position:fixed!important;left:50%!important;top:auto!important;bottom:140px;transform:translateX(-50%);z-index:30;min-width:210px;max-height:62vh;overflow:auto;direction:ltr}
 .fm-sheet button{min-height:44px;font-size:16px}
 @media(max-width:850px){.closeup-actions{gap:6px;flex-wrap:wrap;justify-content:center;width:calc(100% - 16px)}.closeup-actions .inv-closeup{padding:10px 14px}.closeup-actions .entrance-button{padding:10px 14px;font-size:16px}}
+
+.pool-hot{position:absolute;z-index:3;left:27.7%;top:44.2%;width:6.2%;height:8.5%;transform:translate(-50%,-50%) rotate(-24deg);border:2px solid transparent;border-radius:50%;background:transparent;padding:0;cursor:pointer;transition:background .25s,border-color .25s,box-shadow .25s}
+.pool-hot:hover,.pool-hot:focus-visible{background:#e5c79833;border-color:#e5c798cc;box-shadow:0 0 24px #e5c79877}
+.canvas.is-closeup .pool-hot,.scene.is-flying .pool-hot{display:none}
+.pool-veil{position:absolute;inset:0;z-index:9;background:#0f1611;opacity:0;overflow:hidden}
+.pool-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;will-change:transform,opacity}
+.pool-back{position:absolute;top:13px;left:13px;z-index:10;padding:9px 13px;background:#f2ecdf;color:#27372b;border:1px solid #e1c296;border-radius:5px;font-size:12px;box-shadow:0 4px 20px #0004;cursor:pointer}
+@media(max-width:850px){.pool-hot{width:9%;height:12%}}
 </style></head><body><main class="layout"><section class="scene" aria-label="الماستر بلان التفاعلي"><div class="viewport" id="viewport"><div class="canvas" id="canvas"><img class="master-image" src="9-clarity-3-masterplan-render.webp" alt="رندر جوي لمشروع 9NORTH من نجدار"><img class="closeup-image" id="closeupImage" alt="" decoding="async" hidden><svg viewBox="0 0 1435 801" aria-label="مناطق مبدئية لتأكيد توزيع المباني"><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 1" data-zone="1" class="zone" points="184,300 194,291 194,277 270,255 295,245 329,263 330,284 311,292 308,374 288,394 231,421 215,419 206,402 200,352"><title>منطقة 1 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 2" data-zone="2" class="zone" points="296,245 455,181 454,164 474,146 572,116 602,136 600,145 535,167 529,193 524,249 511,302 491,349 472,398 451,463 434,507 302,497 301,457 303,416 310,389 331,322 329,283 330,263"><title>منطقة 2 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 3" data-zone="3" class="zone" points="537,161 586,144 721,210 726,218 716,300 719,354 712,431 699,452 581,441 579,425 590,335 612,279 627,223 585,202 552,186 537,179"><title>منطقة 3 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 4" data-zone="4" class="zone" points="617,115 838,31 891,50 893,87 855,98 850,124 838,130 835,88 682,149 683,186 619,158"><title>منطقة 4 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 5" data-zone="5" class="zone" points="850,94 897,76 963,112 1069,169 1088,171 1187,192 1185,217 1172,251 1165,298 1141,333 1052,302 1047,273 1003,261 985,226 919,204 942,160 892,136 852,115"><title>منطقة 5 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 6" data-zone="6" class="zone" points="714,149 793,121 838,137 846,157 882,170 916,158 942,160 919,193 975,236 1017,262 1021,279 1012,301 1010,350 997,368 924,388 895,377 895,357 854,326 809,291 767,260 735,239 717,223"><title>منطقة 6 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 7" data-zone="7" class="zone" points="1074,341 1184,370 1187,394 1171,453 1162,475 1141,519 1066,500 1040,489 1038,479 991,466 992,440 1022,393"><title>منطقة 7 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 8" data-zone="8" class="zone" points="754,469 854,422 959,478 972,495 1062,550 1065,577 1049,603 978,644 950,637 904,615 902,599 851,571 831,568 791,540 790,526 755,509"><title>منطقة 8 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 9" data-zone="9" class="zone" points="524,503 556,489 580,491 600,500 653,502 676,516 674,539 741,556 744,574 834,584 842,596 813,699 799,725 752,716 645,685 642,714 556,714 493,701 486,677 489,639 501,577"><title>منطقة 9 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="الساحة المنخفضة" data-zone="10" class="zone plaza-zone" points="783,331 796,330 809,335 817,345 817,357 823,370 839,384 857,399 859,405 847,410 828,415 809,418 787,413 774,406 778,394 785,379 787,368 786,360 780,352 776,343 778,336"></polygon></svg><button class="marker" style="left:17.56098%;top:41.57303%" data-zone="1" aria-label="افتح المنطقة المبدئية 1">1</button><button class="marker" style="left:29.40767%;top:35.33084%" data-zone="2" aria-label="افتح المنطقة المبدئية 2">2</button><button class="marker" style="left:46.06272%;top:37.95256%" data-zone="3" aria-label="افتح المنطقة المبدئية 3">3</button><button class="marker" style="left:51.63763%;top:13.10861%" data-zone="4" aria-label="افتح المنطقة المبدئية 4">4</button><button class="marker" style="left:75.19164%;top:28.83895%" data-zone="5" aria-label="افتح المنطقة المبدئية 5">5</button><button class="marker" style="left:62.57840%;top:33.70787%" data-zone="6" aria-label="افتح المنطقة المبدئية 6">6</button><button class="marker" style="left:76.58537%;top:52.55930%" data-zone="7" aria-label="افتح المنطقة المبدئية 7">7</button><button class="marker" style="left:62.99652%;top:65.91760%" data-zone="8" aria-label="افتح المنطقة المبدئية 8">8</button><button class="marker" style="left:43.97213%;top:76.02996%" data-zone="9" aria-label="افتح المنطقة المبدئية 9">9</button></div></div><div class="closeup-actions" id="closeupActions"><button class="inv-closeup" id="invCloseup" hidden>Inventory</button><button class="inv-closeup" id="fpCloseup" hidden>Floor Plan</button><button class="entrance-button" id="entranceButton" aria-label="Entrance - ادخل مبنى 6" hidden>Entrance ↗</button></div><div class="entrance-player" id="entrancePlayer" hidden><img class="walk-image" id="walkImage" alt=""><div class="walk-caption" id="walkCaption" role="status"></div><button class="walk-exit" id="walkExit">رجوع للماستر بلان ←</button><button class="walk-play" id="walkPlay" hidden>متابعة الدخول ▶</button><video id="entranceVideo" playsinline webkit-playsinline preload="none" aria-label="جولة داخل مبنى 6"></video></div><div class="veil" id="veil"></div><div class="zone-tip" id="zoneTip" hidden></div><button class="back-plan" id="backPlan" hidden>رجوع للماستر بلان ←</button><div class="controls"><a class="quote-link" href="./?v=5">مولّد الأسعار ↗</a><button id="reset" aria-label="عرض كامل المخطط">الكل</button></div><div class="scene-note" id="sceneNote" role="status">معاينة للتوزيع فقط · الأرقام مؤقتة وليست أكواد المباني</div><button class="inv-hover" id="invHover" hidden>Inventory</button></section></main><div class="paper-veil" id="paperVeil" hidden>
 <div class="paper" role="dialog" aria-modal="true" aria-label="Inventory - وحدات المبنى">
 <button class="paper-close" id="paperClose" aria-label="اقفل">✕</button>
@@ -345,4 +353,41 @@ document.addEventListener('click',e=>{if(fmenu.classList.contains('fm-sheet')&&!
 /* floor choice with a real plan: leave close-up first, then open the reveal */
 const _openPlan=openPlan;
 openPlan=async function(){closeFloorSheet();if(canvas.classList.contains('is-closeup')&&!flying){showMasterplan()}return _openPlan()};
+
+/* Rooftop pool above the hotel: click the pool on the masterplan -> the view comes down from above the hotel to the pool photo. */
+const POOL_SRC='1-rooftop-pool.jpg';
+let poolOpen=false,poolBusy=false;
+const poolVeil=document.createElement('div');poolVeil.className='pool-veil';poolVeil.hidden=true;
+const poolImg=document.createElement('img');poolImg.className='pool-img';poolImg.alt='حمام السباحة أعلى الفندق';poolImg.decoding='async';
+const poolBack=document.createElement('button');poolBack.type='button';poolBack.className='pool-back';poolBack.textContent='رجوع للماستر بلان ←';
+poolVeil.appendChild(poolImg);poolVeil.appendChild(poolBack);scene.appendChild(poolVeil);
+const poolHot=document.createElement('button');poolHot.type='button';poolHot.className='pool-hot';poolHot.setAttribute('aria-label','حمام السباحة أعلى الفندق');canvas.appendChild(poolHot);
+poolHot.addEventListener('mouseenter',()=>clearTimeout(invHideTimer));poolHot.addEventListener('mouseleave',hideInvHoverSoon);
+async function openPool(){
+ if(poolOpen||poolBusy||flying||planOpen||canvas.classList.contains('is-closeup')||!paperVeil.hidden)return;poolBusy=true;
+ zoneTip.hidden=true;invHover.hidden=true;bmenu.hidden=true;fmenu.hidden=true;
+ if(!poolImg.src||!poolImg.src.endsWith(POOL_SRC))poolImg.src=POOL_SRC;
+ try{await poolImg.decode()}catch(e){}
+ poolVeil.hidden=false;poolVeil.style.opacity='1';poolBack.hidden=true;
+ if(!reducedMotion()){
+  const cr=canvas.getBoundingClientRect(),hr=poolHot.getBoundingClientRect();
+  canvas.style.transformOrigin=((hr.left+hr.width/2-cr.left)/cr.width*100)+'% '+((hr.top+hr.height/2-cr.top)/cr.height*100)+'%';
+  const z=canvas.animate([{transform:'scale(1)'},{transform:'scale(2.6)'}],{duration:750,easing:'cubic-bezier(.5,0,.8,.5)',fill:'forwards'});
+  const v=poolVeil.animate([{opacity:0},{opacity:1}],{duration:750,easing:'ease-in',fill:'forwards'});
+  try{await Promise.all([z.finished,v.finished])}catch(e){}
+  z.cancel();v.cancel();canvas.style.transformOrigin='';
+  const a=poolImg.animate([{opacity:0,transform:'translateY(-14%) scale(1.3)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:1100,easing:'cubic-bezier(.16,.84,.3,1)',fill:'forwards'});
+  try{await a.finished}catch(e){}
+  a.commitStyles();a.cancel();
+ }
+ poolImg.style.opacity='1';poolImg.style.transform='';poolVeil.style.opacity='1';poolBack.hidden=false;poolOpen=true;poolBusy=false;poolBack.focus();
+}
+async function closePool(){
+ if(!poolOpen||poolBusy)return;poolBusy=true;poolBack.hidden=true;
+ if(!reducedMotion()){const a=poolVeil.animate([{opacity:1},{opacity:0}],{duration:450,fill:'forwards'});try{await a.finished}catch(e){}a.cancel()}
+ poolVeil.hidden=true;poolVeil.style.opacity='0';poolImg.style.opacity='0';poolOpen=false;poolBusy=false;
+}
+poolHot.addEventListener('click',e=>{e.stopPropagation();openPool()});
+poolBack.addEventListener('click',closePool);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&poolOpen)closePool()});
 </script></body></html>
