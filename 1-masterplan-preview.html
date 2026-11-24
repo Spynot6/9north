@@ -309,8 +309,8 @@ bmInv.addEventListener('click',()=>{if(bmZone)openPaper(bmZone);bmenu.hidden=tru
 /* Floor Plan side list: floors by building category. Only building 8 has a supplied plan (its floor is not established yet). */
 const FLOOR_CATS={commercial:{ar:'التجاري',floors:['Ground','First','Roof']},hotel:{ar:'الفندقي',floors:['Ground','First','Second','Third','Fourth']},office:{ar:'المكاتب والعيادات',floors:['Ground','First','Second','Third','Fourth']}};
 const ZONE_CAT={1:'hotel',2:'hotel',3:'hotel',4:'office',5:'office',6:'office',7:'commercial',8:'commercial',9:'commercial'};
-const FLOOR_PLANS={}; /* {building:{FloorName:true}} filled only when a real plan is supplied for that floor */
-const UNASSIGNED_PLAN={8:true}; /* building 8 plan supplied, floor not yet identified */
+const FLOOR_PLANS={8:{Ground:true}}; /* {building:{FloorName:true}} filled only when a real plan is supplied for that floor */
+const UNASSIGNED_PLAN={}; /* building 8 plan supplied, floor not yet identified */
 const fmenu=document.createElement('div');fmenu.className='bmenu fmenu';fmenu.hidden=true;scene.appendChild(fmenu);
 function buildFmenu(n){const c=FLOOR_CATS[ZONE_CAT[n]];if(!c)return false;fmenu.innerHTML='';
  const h=document.createElement('div');h.className='bm-use fm-head';h.textContent=c.ar;h.style.direction='rtl';fmenu.appendChild(h);
