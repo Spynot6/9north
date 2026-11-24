@@ -211,8 +211,8 @@ document.getElementById('reset').onclick=()=>{setZoom(1);viewport.scrollTo(0,0)}
 const invHover=document.getElementById('invHover'),invCloseup=document.getElementById('invCloseup'),paperVeil=document.getElementById('paperVeil'),paperTitle=document.getElementById('paperTitle'),paperSub=document.getElementById('paperSub'),paperClose=document.getElementById('paperClose');
 let invHoverZone=null,invHideTimer=null;
 function invAvailable(n){return Number.isInteger(n)&&n>=1&&n<=9}
-function positionInvHoverAt(x,y){const sr=scene.getBoundingClientRect();let top=y-sr.top+18;if(top+48>sr.height)top=y-sr.top-52;invHover.style.left=Math.min(Math.max(x-sr.left,60),sr.width-60)+'px';invHover.style.top=top+'px'}
-function showInvHover(n,x,y){if(!invAvailable(n)||canvas.classList.contains('is-closeup')||flying||!paperVeil.hidden)return;invHoverZone=n;clearTimeout(invHideTimer);if(x!==undefined)positionInvHoverAt(x,y);invHover.hidden=false}
+function positionInvHover(n){const p=MARKER_POS[n];if(!p)return;const cr=canvas.getBoundingClientRect(),sr=scene.getBoundingClientRect();const x=cr.left+cr.width*p[0]/100-sr.left,y=cr.top+cr.height*p[1]/100-sr.top;invHover.style.left=Math.min(Math.max(x,60),sr.width-60)+'px';invHover.style.top=Math.min(Math.max(y-17,8),sr.height-52)+'px'}
+function showInvHover(n,x,y){if(!invAvailable(n)||canvas.classList.contains('is-closeup')||flying||!paperVeil.hidden)return;clearTimeout(invHideTimer);if(invHover.hidden||invHoverZone!==n)positionInvHover(n);invHoverZone=n;invHover.hidden=false}
 function hideInvHoverSoon(){clearTimeout(invHideTimer);invHideTimer=setTimeout(()=>{invHover.hidden=true;invHoverZone=null},280)}
 if(window.matchMedia('(hover: hover)').matches){
  document.querySelectorAll('.zone').forEach(z=>{const zn=Number(z.dataset.zone);z.addEventListener('mouseenter',e=>showInvHover(zn,e.clientX,e.clientY));z.addEventListener('mousemove',e=>showInvHover(zn,e.clientX,e.clientY));z.addEventListener('mouseleave',hideInvHoverSoon)});
