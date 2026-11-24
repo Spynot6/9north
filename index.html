@@ -176,6 +176,11 @@ input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{ou
   <div class="hero-art" aria-hidden="true"><i></i></div>
 </section>
 <div class="wrap">
+  <div id="bldBanner" hidden style="margin:0 0 14px;padding:14px 16px;border:1px solid #c9a96b;border-right:5px solid #c9a96b;border-radius:8px;background:#fbf6ea;color:#3a2a1a;line-height:1.9">
+    <b id="bldTitle"></b>
+    <div id="bldMsg" style="font-size:14px"></div>
+    <a href="1-masterplan-preview.html" style="font-size:13px;text-decoration:underline;color:#7a1f2b">← رجوع للماستر بلان</a>
+  </div>
   <div class="card">
     <h2>بيانات الوحدة</h2>
     <label for="project">المشروع</label>
@@ -667,6 +672,17 @@ $('cmpBtn').addEventListener('click',()=>{
 $('refreshBtn').addEventListener('click',()=>loadUnits(true));
 $('dpDate').valueAsDate=new Date();
 loadUnits(false);
+</script>
+<script>
+/* قادم من الماستر بلان: ?building=N */
+(function(){
+ var n=parseInt(new URLSearchParams(location.search).get('building'),10);
+ if(!(n>=1&&n<=9))return;
+ var uses={1:'Branded Apartments',2:'Branded Apartments',3:'Branded Apartments',4:'Admin & Clinic',5:'Clinic',6:'Admin',7:'Commercial',8:'Commercial',9:'Commercial'};
+ document.getElementById('bldTitle').textContent='9NORTH · مبنى '+n+' ('+uses[n]+')';
+ document.getElementById('bldMsg').textContent='بيانات وحدات المبنى ده لسه ما اتضافتش في المولد، فمفيش وحدات متاحة معروضة له دلوقتي (ده مش معناه إنه مخلص). الوحدات اللي تحت تخص مشاريع تانية (Halo / Meray 2).';
+ document.getElementById('bldBanner').hidden=false;
+})();
 </script>
 </body>
 </html>
