@@ -354,40 +354,47 @@ document.addEventListener('click',e=>{if(fmenu.classList.contains('fm-sheet')&&!
 const _openPlan=openPlan;
 openPlan=async function(){closeFloorSheet();if(canvas.classList.contains('is-closeup')&&!flying){showMasterplan()}return _openPlan()};
 
-/* Rooftop pool above the hotel: click the pool on the masterplan -> the view comes down from above the hotel to the pool photo. */
-const POOL_SRC='1-rooftop-pool.jpg';
+/* Rooftop pool above the hotel: same reveal as the Floor Plan (card grows from the pool to centre, dim veil, back button). */
+const POOL_SRC='1-rooftop-pool.jpg',POOL_RATIO=1194/1600;
 let poolOpen=false,poolBusy=false;
-const poolVeil=document.createElement('div');poolVeil.className='pool-veil';poolVeil.hidden=true;
-const poolImg=document.createElement('img');poolImg.className='pool-img';poolImg.alt='حمام السباحة أعلى الفندق';poolImg.decoding='async';
-const poolBack=document.createElement('button');poolBack.type='button';poolBack.className='pool-back';poolBack.textContent='رجوع للماستر بلان ←';
-poolVeil.appendChild(poolImg);poolVeil.appendChild(poolBack);scene.appendChild(poolVeil);
+const poolVeil=document.createElement('div');poolVeil.className='plan-veil';poolVeil.hidden=true;
+const poolCard=document.createElement('div');poolCard.className='plan-card';poolCard.hidden=true;
+const poolImg=document.createElement('img');poolImg.alt='حمام السباحة أعلى الفندق';poolImg.decoding='async';poolCard.appendChild(poolImg);
+const poolBack=document.createElement('button');poolBack.type='button';poolBack.className='plan-close';poolBack.textContent='رجوع للماستر بلان ←';poolBack.hidden=true;
+scene.appendChild(poolVeil);scene.appendChild(poolCard);scene.appendChild(poolBack);
 const poolHot=document.createElement('button');poolHot.type='button';poolHot.className='pool-hot';poolHot.setAttribute('aria-label','حمام السباحة أعلى الفندق');canvas.appendChild(poolHot);
 poolHot.addEventListener('mouseenter',()=>clearTimeout(invHideTimer));poolHot.addEventListener('mouseleave',hideInvHoverSoon);
+function poolRects(){const sr=scene.getBoundingClientRect(),zr=poolHot.getBoundingClientRect();
+ let w0=Math.max(40,zr.width),h0=Math.max(40,zr.height),x0=zr.left-sr.left,y0=zr.top-sr.top;
+ const maxH=sr.height-70,maxW=sr.width-24;let W,H;if(maxW/POOL_RATIO>maxH){H=maxH;W=H*POOL_RATIO}else{W=maxW;H=W/POOL_RATIO}
+ return {from:{left:x0+'px',top:y0+'px',width:w0+'px',height:h0+'px'},to:{left:(sr.width-W)/2+'px',top:(sr.height-H)/2+10+'px',width:W+'px',height:H+'px'}}}
 async function openPool(){
  if(poolOpen||poolBusy||flying||planOpen||canvas.classList.contains('is-closeup')||!paperVeil.hidden)return;poolBusy=true;
  zoneTip.hidden=true;invHover.hidden=true;bmenu.hidden=true;fmenu.hidden=true;
  if(!poolImg.src||!poolImg.src.endsWith(POOL_SRC))poolImg.src=POOL_SRC;
- try{await poolImg.decode()}catch(e){}
- poolVeil.hidden=false;poolVeil.style.opacity='1';poolBack.hidden=true;
+ const r=poolRects();poolVeil.hidden=false;poolCard.hidden=false;
+ Object.assign(poolCard.style,r.to);
  if(!reducedMotion()){
-  const cr=canvas.getBoundingClientRect(),hr=poolHot.getBoundingClientRect();
-  canvas.style.transformOrigin=((hr.left+hr.width/2-cr.left)/cr.width*100)+'% '+((hr.top+hr.height/2-cr.top)/cr.height*100)+'%';
-  const z=canvas.animate([{transform:'scale(1)'},{transform:'scale(2.6)'}],{duration:750,easing:'cubic-bezier(.5,0,.8,.5)',fill:'forwards'});
-  const v=poolVeil.animate([{opacity:0},{opacity:1}],{duration:750,easing:'ease-in',fill:'forwards'});
-  try{await Promise.all([z.finished,v.finished])}catch(e){}
-  z.cancel();v.cancel();canvas.style.transformOrigin='';
-  const a=poolImg.animate([{opacity:0,transform:'translateY(-14%) scale(1.3)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:1100,easing:'cubic-bezier(.16,.84,.3,1)',fill:'forwards'});
-  try{await a.finished}catch(e){}
-  a.commitStyles();a.cancel();
+  const a=poolVeil.animate([{opacity:0},{opacity:.6}],{duration:600,fill:'forwards'});
+  const mid={left:parseFloat(r.from.left)+(parseFloat(r.from.width)-parseFloat(r.to.width)*.35)/2+'px',top:parseFloat(r.from.top)+(parseFloat(r.from.height)-parseFloat(r.to.height)*.35)/2+'px',width:parseFloat(r.to.width)*.35+'px',height:parseFloat(r.to.height)*.35+'px'};
+  const c=poolCard.animate([Object.assign({opacity:0},r.from),Object.assign({opacity:1,offset:.3},mid),Object.assign({opacity:1},r.to)],{duration:1000,delay:350,easing:'cubic-bezier(.2,.7,.2,1)',fill:'both'});
+  try{await Promise.all([a.finished,c.finished])}catch(e){}
+  a.commitStyles();c.commitStyles();a.cancel();c.cancel();
  }
- poolImg.style.opacity='1';poolImg.style.transform='';poolVeil.style.opacity='1';poolBack.hidden=false;poolOpen=true;poolBusy=false;poolBack.focus();
+ poolVeil.style.opacity='.6';poolCard.style.opacity='1';poolBack.hidden=false;poolOpen=true;poolBusy=false;poolBack.focus();
 }
 async function closePool(){
  if(!poolOpen||poolBusy)return;poolBusy=true;poolBack.hidden=true;
- if(!reducedMotion()){const a=poolVeil.animate([{opacity:1},{opacity:0}],{duration:450,fill:'forwards'});try{await a.finished}catch(e){}a.cancel()}
- poolVeil.hidden=true;poolVeil.style.opacity='0';poolImg.style.opacity='0';poolOpen=false;poolBusy=false;
+ const r=poolRects();
+ if(!reducedMotion()){
+  const c=poolCard.animate([Object.assign({opacity:1},r.to),Object.assign({opacity:0},r.from)],{duration:550,easing:'cubic-bezier(.5,0,.8,.4)',fill:'forwards'});
+  const a=poolVeil.animate([{opacity:.6},{opacity:0}],{duration:550,fill:'forwards'});
+  try{await Promise.all([a.finished,c.finished])}catch(e){}
+  a.cancel();c.cancel();
+ }
+ poolVeil.hidden=true;poolCard.hidden=true;poolVeil.style.opacity='0';poolCard.style.opacity='0';poolOpen=false;poolBusy=false;
 }
 poolHot.addEventListener('click',e=>{e.stopPropagation();openPool()});
-poolBack.addEventListener('click',closePool);
+poolBack.addEventListener('click',closePool);poolVeil.addEventListener('click',closePool);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&poolOpen)closePool()});
 </script></body></html>
