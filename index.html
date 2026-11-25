@@ -642,7 +642,7 @@ $('exportBtn').addEventListener('click',async()=>{
     if(_url) URL.revokeObjectURL(_url); _url=URL.createObjectURL(blob);
     const a=$('saveBar'); a.href=_url; a.download=nm; a.style.display='flex';
     const f=new File([blob],nm,{type:'application/pdf'});
-    const isTouch=window.matchMedia('(pointer:coarse)').matches;
+    const isTouch=window.matchMedia('(pointer:coarse)').matches&&!matchMedia('(any-pointer:fine)').matches;
     if(isTouch&&navigator.canShare&&navigator.canShare({files:[f]})){
       navigator.share({files:[f],title:nm}).catch(()=>{});
     }else{
