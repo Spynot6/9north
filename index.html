@@ -634,7 +634,7 @@ async function generateDoc(){
   return {blob:doc.output('blob'),nm};
 }
 let _url=null;
-$('exportBtn').addEventListener('click',async()=>{
+$('exportBtn').addEventListener('click',async(ev)=>{
   if(!schedule()){ toast('اختار الوحدة الأول.'); return; }
   const b=$('exportBtn'); b.disabled=true; b.textContent='جاري تجهيز الملف…';
   try{
@@ -642,7 +642,7 @@ $('exportBtn').addEventListener('click',async()=>{
     if(_url) URL.revokeObjectURL(_url); _url=URL.createObjectURL(blob);
     const a=$('saveBar'); a.href=_url; a.download=nm; a.style.display='flex';
     const f=new File([blob],nm,{type:'application/pdf'});
-    const isTouch=window.matchMedia('(pointer:coarse)').matches&&!matchMedia('(any-pointer:fine)').matches;
+    const isTouch=(ev&&ev.pointerType)?ev.pointerType==='touch':(matchMedia('(pointer:coarse)').matches&&!matchMedia('(any-pointer:fine)').matches);
     if(isTouch&&navigator.canShare&&navigator.canShare({files:[f]})){
       navigator.share({files:[f],title:nm}).catch(()=>{});
     }else{
