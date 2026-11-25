@@ -88,7 +88,7 @@
 <footer class="paper-footer"><span>9NORTH · قائمة خاصة بالمبنى</span><span>AVAILABLE UNITS</span></footer>
 </div>
 </div>
-<script>(function(){function f(e){var t=e.pointerType;if(!t)return;window.__pt=t;document.documentElement.classList.toggle('pt-touch',t==='touch')}document.addEventListener('pointerdown',f,true);document.addEventListener('pointermove',f,true);['mouseover','mouseout','mousemove','mouseenter','mouseleave'].forEach(function(t){document.addEventListener(t,function(e){if(window.__pt==='touch')e.stopImmediatePropagation()},true)})})();</script><script>
+<script>(function(){function f(e){var t=e.pointerType;if(!t)return;window.__pt=t;document.documentElement.classList.toggle('pt-touch',t==='touch')}document.addEventListener('pointerdown',f,true);document.addEventListener('pointermove',f,true);})();</script><script>
 let zoom=1,selectedZone=null,flying=false;
 const canvas=document.getElementById('canvas'), closeup=document.getElementById('closeupImage'), backPlan=document.getElementById('backPlan'), scene=document.querySelector('.scene'), note=document.getElementById('sceneNote'), veil=document.getElementById('veil'), viewport=document.getElementById('viewport');
 const entranceButton=document.getElementById('entranceButton'), entrancePlayer=document.getElementById('entrancePlayer'), entranceVideo=document.getElementById('entranceVideo');
@@ -238,11 +238,11 @@ document.getElementById('reset').onclick=()=>{setZoom(1);viewport.scrollTo(0,0)}
 
 /* Inventory: hover button + paper overlay (concept only, no live unit data yet) */
 const invHover=document.getElementById('invHover'),invCloseup=document.getElementById('invCloseup'),paperVeil=document.getElementById('paperVeil'),paperTitle=document.getElementById('paperTitle'),paperSub=document.getElementById('paperSub'),paperClose=document.getElementById('paperClose');
-let invHoverZone=null,invHideTimer=null;
+let invHoverZone=null,invHideTimer=null;let swTimer=null,swPending=null;
 function invAvailable(n){return Number.isInteger(n)&&n>=1&&n<=9}
 function positionInvHover(n){const p=MARKER_POS[n];if(!p)return;const cr=canvas.getBoundingClientRect(),sr=scene.getBoundingClientRect();const x=cr.left+cr.width*p[0]/100-sr.left,y=cr.top+cr.height*p[1]/100-sr.top;invHover.style.left=Math.min(Math.max(x,60),sr.width-60)+'px';invHover.style.top=Math.min(Math.max(y-17,8),sr.height-52)+'px'}
-function showInvHover(n,x,y){if(typeof planOpen!=='undefined'&&planOpen)return;if(!invAvailable(n)||canvas.classList.contains('is-closeup')||flying||!paperVeil.hidden)return;clearTimeout(invHideTimer);if(invHover.hidden||invHoverZone!==n)positionInvHover(n);invHoverZone=n;invHover.hidden=false}
-function hideInvHoverSoon(){clearTimeout(invHideTimer);invHideTimer=setTimeout(()=>{invHover.hidden=true;invHoverZone=null},280)}
+function showInvHover(n,x,y){if(window.__pt==='touch')return;if(typeof planOpen!=='undefined'&&planOpen)return;if(!invAvailable(n)||canvas.classList.contains('is-closeup')||flying||!paperVeil.hidden)return;clearTimeout(invHideTimer);if(!invHover.hidden&&invHoverZone!==null&&invHoverZone!==n){if(swPending!==n){clearTimeout(swTimer);swPending=n;swTimer=setTimeout(function(){swPending=null;invHoverZone=n;positionInvHover(n);invHover.hidden=false},450)}return}clearTimeout(swTimer);swPending=null;if(invHover.hidden||invHoverZone!==n)positionInvHover(n);invHoverZone=n;invHover.hidden=false}
+function hideInvHoverSoon(){clearTimeout(invHideTimer);clearTimeout(swTimer);swPending=null;invHideTimer=setTimeout(()=>{invHover.hidden=true;invHoverZone=null},600)}
 if(true){
  document.querySelectorAll('.zone').forEach(z=>{const zn=Number(z.dataset.zone);z.addEventListener('mouseenter',e=>showInvHover(zn,e.clientX,e.clientY));z.addEventListener('mousemove',e=>showInvHover(zn,e.clientX,e.clientY));z.addEventListener('mouseleave',hideInvHoverSoon)});
  document.querySelectorAll('.marker').forEach(m=>{m.addEventListener('mouseenter',()=>clearTimeout(invHideTimer));m.addEventListener('mouseleave',hideInvHoverSoon)});
@@ -314,7 +314,7 @@ function placeBmenu(n){const z=document.querySelector('.zone[data-zone="'+n+'"]'
 new MutationObserver(()=>{if(invHover.hidden||!invHoverZone){bmenu.hidden=true;return}
  if(bmenu.hidden||bmZone!==invHoverZone){bmZone=invHoverZone;bmUse.textContent=ZONE_LABELS[bmZone]||'';bmNote.hidden=true;bmFp.setAttribute('aria-disabled',bmZone===8?'false':'true');bmenu.hidden=false;placeBmenu(bmZone)}
 }).observe(invHover,{attributes:true,attributeFilter:['hidden','style']});
-bmenu.addEventListener('mouseenter',()=>clearTimeout(invHideTimer));
+bmenu.addEventListener('mouseenter',()=>{clearTimeout(invHideTimer);clearTimeout(swTimer);swPending=null});
 bmenu.addEventListener('mouseleave',hideInvHoverSoon);
 bmUse.addEventListener('click',()=>{const n=bmZone;bmenu.hidden=true;invHover.hidden=true;if(n)cinematicToZone(n)});
 bmInv.addEventListener('click',()=>{if(bmZone)openPaper(bmZone);bmenu.hidden=true});
