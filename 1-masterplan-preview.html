@@ -78,6 +78,33 @@
 .pool-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;will-change:transform,opacity}
 .pool-back{position:absolute;top:13px;left:13px;z-index:10;padding:9px 13px;background:#f2ecdf;color:#27372b;border:1px solid #e1c296;border-radius:5px;font-size:12px;box-shadow:0 4px 20px #0004;cursor:pointer}
 @media(max-width:850px){.pool-hot{width:9%;height:12%}}
+
+/* Floor split: building close-up explodes into floor cards */
+.canvas.is-closeup .closeup-image{transition:filter .45s ease}
+.scene.is-split .closeup-image{filter:brightness(.45) saturate(.7)}
+.floors-layer{position:absolute;inset:0;z-index:5;pointer-events:none}
+.floors-stack{position:absolute;right:5%;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.fcard{pointer-events:auto;display:flex;align-items:center;gap:10px;width:250px;padding:11px 15px;background:#f2ecdf;color:#27372b;border:1px solid #e1c296;border-radius:6px;box-shadow:0 6px 24px #0008;text-align:left;font-family:inherit;cursor:pointer;transition:background .2s,transform .2s}
+.fcard:hover{background:#fff8ea;transform:translateX(-5px)}
+.fcard .fl{font-family:Georgia,serif;font-size:17px;letter-spacing:.5px}
+.fcard .fm2{margin-inline-start:auto;font-size:11px;color:#75644a;direction:rtl;white-space:nowrap}
+.fcard .fdot{width:7px;height:7px;border-radius:50%;background:#c8a25e;flex-shrink:0;box-shadow:0 0 8px #e5c798}
+.fcard[aria-disabled=true] .fdot{background:#b9b3a4;box-shadow:none}
+.floors-close{position:absolute;top:76px;left:24px;z-index:6;padding:10px 15px;background:#f2ecdf;color:#27372b;border:1px solid #e1c296;border-radius:5px;font-size:12px;box-shadow:0 4px 20px #0004;pointer-events:auto}
+.floors-close:hover{background:#fff8ea}
+.floors-note{position:absolute;bottom:96px;left:50%;transform:translateX(-50%);background:#17231cf2;border:1px solid #e5c798aa;color:#f6e4c8;padding:9px 16px;border-radius:5px;font-size:12px;direction:rtl;box-shadow:0 6px 22px #0008;pointer-events:none;white-space:nowrap}
+.plan-info{position:absolute;z-index:8;display:flex;align-items:center;gap:14px;background:#f2ecdf;color:#27372b;border:1px solid #e1c296;border-radius:6px;padding:10px 16px;font-size:12px;direction:rtl;box-shadow:0 6px 24px #0007;white-space:nowrap}
+.plan-info a{border:1px solid #293c2c;background:#293c2c;color:#fff;border-radius:4px;padding:8px 13px;font-size:11px;white-space:nowrap}
+.plan-info a:hover{background:#3a5238}
+@media(max-width:850px){
+.floors-stack{right:auto;left:50%;top:auto;bottom:118px;transform:translateX(-50%)}
+.fcard{width:min(250px,74vw);padding:9px 13px}
+.fcard .fl{font-size:15px}
+.floors-close{top:60px;left:13px;font-size:11px;padding:8px 11px}
+.scene.is-split .closeup-actions{display:none}
+.floors-note{bottom:80px;font-size:11px}
+.plan-info{flex-wrap:wrap;justify-content:center;white-space:normal;text-align:center;max-width:calc(100% - 24px)}
+}
 </style></head><body><main class="layout"><section class="scene" aria-label="الماستر بلان التفاعلي"><div class="viewport" id="viewport"><div class="canvas" id="canvas"><img class="master-image" src="9-clarity-3-masterplan-render.webp" alt="رندر جوي لمشروع 9NORTH من نجدار"><img class="closeup-image" id="closeupImage" alt="" decoding="async" hidden><svg viewBox="0 0 1435 801" aria-label="مناطق مبدئية لتأكيد توزيع المباني"><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 1" data-zone="1" class="zone" points="184,300 194,291 194,277 270,255 295,245 329,263 330,284 311,292 308,374 288,394 231,421 215,419 206,402 200,352"><title>منطقة 1 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 2" data-zone="2" class="zone" points="296,245 455,181 454,164 474,146 572,116 602,136 600,145 535,167 529,193 524,249 511,302 491,349 472,398 451,463 434,507 302,497 301,457 303,416 310,389 331,322 329,283 330,263"><title>منطقة 2 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 3" data-zone="3" class="zone" points="537,161 586,144 721,210 726,218 716,300 719,354 712,431 699,452 581,441 579,425 590,335 612,279 627,223 585,202 552,186 537,179"><title>منطقة 3 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 4" data-zone="4" class="zone" points="617,115 838,31 891,50 893,87 855,98 850,124 838,130 835,88 682,149 683,186 619,158"><title>منطقة 4 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 5" data-zone="5" class="zone" points="850,94 897,76 963,112 1069,169 1088,171 1187,192 1185,217 1172,251 1165,298 1141,333 1052,302 1047,273 1003,261 985,226 919,204 942,160 892,136 852,115"><title>منطقة 5 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 6" data-zone="6" class="zone" points="714,149 793,121 838,137 846,157 882,170 916,158 942,160 919,193 975,236 1017,262 1021,279 1012,301 1010,350 997,368 924,388 895,377 895,357 854,326 809,291 767,260 735,239 717,223"><title>منطقة 6 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 7" data-zone="7" class="zone" points="1074,341 1184,370 1187,394 1171,453 1162,475 1141,519 1066,500 1040,489 1038,479 991,466 992,440 1022,393"><title>منطقة 7 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 8" data-zone="8" class="zone" points="754,469 854,422 959,478 972,495 1062,550 1065,577 1049,603 978,644 950,637 904,615 902,599 851,571 831,568 791,540 790,526 755,509"><title>منطقة 8 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="منطقة مبدئية 9" data-zone="9" class="zone" points="524,503 556,489 580,491 600,500 653,502 676,516 674,539 741,556 744,574 834,584 842,596 813,699 799,725 752,716 645,685 642,714 556,714 493,701 486,677 489,639 501,577"><title>منطقة 9 - ترقيم مبدئي</title></polygon><polygon tabindex="0" role="button" aria-label="الساحة المنخفضة" data-zone="10" class="zone plaza-zone" points="783,331 796,330 809,335 817,345 817,357 823,370 839,384 857,399 859,405 847,410 828,415 809,418 787,413 774,406 778,394 785,379 787,368 786,360 780,352 776,343 778,336"></polygon></svg><button class="marker" style="left:17.56098%;top:41.57303%" data-zone="1" aria-label="افتح المنطقة المبدئية 1">1</button><button class="marker" style="left:29.40767%;top:35.33084%" data-zone="2" aria-label="افتح المنطقة المبدئية 2">2</button><button class="marker" style="left:46.06272%;top:37.95256%" data-zone="3" aria-label="افتح المنطقة المبدئية 3">3</button><button class="marker" style="left:51.63763%;top:13.10861%" data-zone="4" aria-label="افتح المنطقة المبدئية 4">4</button><button class="marker" style="left:75.19164%;top:28.83895%" data-zone="5" aria-label="افتح المنطقة المبدئية 5">5</button><button class="marker" style="left:62.57840%;top:33.70787%" data-zone="6" aria-label="افتح المنطقة المبدئية 6">6</button><button class="marker" style="left:76.58537%;top:52.55930%" data-zone="7" aria-label="افتح المنطقة المبدئية 7">7</button><button class="marker" style="left:62.99652%;top:65.91760%" data-zone="8" aria-label="افتح المنطقة المبدئية 8">8</button><button class="marker" style="left:43.97213%;top:76.02996%" data-zone="9" aria-label="افتح المنطقة المبدئية 9">9</button></div></div><div class="closeup-actions" id="closeupActions"><button class="inv-closeup" id="invCloseup" hidden>Inventory</button><button class="inv-closeup" id="fpCloseup" hidden>Floor Plan</button><button class="entrance-button" id="entranceButton" aria-label="Entrance - ادخل مبنى 6" hidden>Entrance ↗</button></div><div class="entrance-player" id="entrancePlayer" hidden><img class="walk-image" id="walkImage" alt=""><div class="walk-caption" id="walkCaption" role="status"></div><button class="walk-exit" id="walkExit">رجوع للماستر بلان ←</button><button class="walk-play" id="walkPlay" hidden>متابعة الدخول ▶</button><video id="entranceVideo" playsinline webkit-playsinline preload="none" aria-label="جولة داخل مبنى 6"></video></div><div class="veil" id="veil"></div><div class="zone-tip" id="zoneTip" hidden></div><button class="back-plan" id="backPlan" hidden>رجوع للماستر بلان ←</button><div class="controls"><a class="quote-link" href="./?v=5">مولّد الأسعار ↗</a><button id="reset" aria-label="عرض كامل المخطط">الكل</button></div><div class="scene-note" id="sceneNote" role="status">معاينة للتوزيع فقط · الأرقام مؤقتة وليست أكواد المباني</div><button class="inv-hover" id="invHover" hidden>Inventory</button></section></main><div class="paper-veil" id="paperVeil" hidden>
 <div class="paper" role="dialog" aria-modal="true" aria-label="Inventory - وحدات المبنى">
 <button class="paper-close" id="paperClose" aria-label="اقفل">✕</button>
@@ -174,7 +201,7 @@ function selectZone(n){
  if(window.matchMedia('(max-width:850px)').matches)scene.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function preloadEntrance(){const e=ENTRANCES[selectedZone];if(!e||scene.classList.contains('is-playing'))return;if(entranceVideo.getAttribute('src')!==e.src){entranceVideo.preload='auto';entranceVideo.src=e.src;entranceVideo.load()}}
-function showImageReady(){if(selectedZone===null||closeup.hidden)return;setZoom(zoom);canvas.classList.remove('is-loading');note.textContent='المبنى '+selectedZone+' · صورة مقربة · الترقيم مبدئي';syncEntrance();preloadEntrance()}
+function showImageReady(){if(selectedZone===null||closeup.hidden)return;setZoom(zoom);canvas.classList.remove('is-loading');note.textContent='المبنى '+selectedZone+' · صورة مقربة · الترقيم مبدئي';syncEntrance();preloadEntrance();if(window.__afterShowImageReady)window.__afterShowImageReady()}
 closeup.addEventListener('load',showImageReady);
 closeup.addEventListener('error',()=>{canvas.classList.remove('is-loading');note.textContent='الصورة لم تتحمل. اختار رقم المبنى للمحاولة مرة تانية.'});
 function showMasterplan(){stopEntrance();selectedZone=null;scene.classList.remove('is-plaza');canvas.style.height='';canvas.classList.remove('is-closeup','is-loading');scene.classList.remove('is-closeup');closeup.hidden=true;backPlan.hidden=true;clearSelection();note.textContent=defaultNote;setZoom(fitZoom());centerView();syncInvCloseup()}
@@ -299,8 +326,8 @@ async function closePlan(){
  }
  planVeil.hidden=true;planCard.hidden=true;planVeil.style.opacity='0';planCard.style.opacity='0';planOpen=false;planBusy=false;
 }
-planClose.addEventListener('click',closePlan);planVeil.addEventListener('click',closePlan);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&planOpen)closePlan()});
+planClose.addEventListener('click',()=>{if(window.__planFromSplit){__closePlanOverlay()}else{closePlan()}});planVeil.addEventListener('click',()=>{if(window.__planFromSplit){__closePlanOverlay()}else{closePlan()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&planOpen&&!window.__planFromSplit)closePlan()});
 
 /* Building side menu: Commercial / Inventory / Floor Plan, driven by the existing Inventory hover state. */
 const bmenu=document.createElement('div');bmenu.className='bmenu';bmenu.hidden=true;bmenu.setAttribute('role','menu');
@@ -334,7 +361,7 @@ let fmNote={hidden:true};
 function placeFmenu(){const sr=scene.getBoundingClientRect(),br=bmenu.getBoundingClientRect(),fr=bmFp.getBoundingClientRect();const mw=fmenu.offsetWidth,mh=fmenu.offsetHeight;const zr=document.querySelector('.zone[data-zone="'+bmZone+'"]').getBoundingClientRect();
  const bmRight=br.left>=zr.left+zr.width/2;let x=bmRight?br.right-sr.left+8:br.left-sr.left-mw-8;if(x<8||x+mw>sr.width-8){x=bmRight?br.left-sr.left-mw-8:br.right-sr.left+8}x=Math.max(8,Math.min(x,sr.width-mw-8));
  let y=fr.top-sr.top-6;y=Math.max(8,Math.min(y,sr.height-mh-8));fmenu.style.left=x+'px';fmenu.style.top=y+'px'}
-bmFp.addEventListener('click',()=>{if(fmenu.hidden||fmenu.dataset.z!=String(bmZone)){if(buildFmenu(bmZone)){fmenu.dataset.z=bmZone;fmenu.hidden=false;placeFmenu()}}else{fmenu.hidden=true}bmNote.hidden=true});
+bmFp.addEventListener('click',()=>{const n=bmZone;bmenu.hidden=true;fmenu.hidden=true;invHover.hidden=true;if(n)cinematicToZone(n)});
 new MutationObserver(()=>{if(bmenu.hidden)fmenu.hidden=true}).observe(bmenu,{attributes:true,attributeFilter:['hidden']});
 fmenu.addEventListener('mouseenter',()=>clearTimeout(invHideTimer));fmenu.addEventListener('mouseleave',hideInvHoverSoon);
 bmenu.addEventListener('mouseenter',()=>{});
@@ -347,7 +374,7 @@ new MutationObserver(mirrorFp).observe(invCloseup,{attributes:true,attributeFilt
 function openFloorSheet(n){bmZone=n;if(!buildFmenu(n))return;fmenu.classList.add('fm-sheet');fmenu.dataset.z=n;fmenu.style.left='';fmenu.style.top='';fmenu.hidden=false}
 function closeFloorSheet(){if(fmenu.classList.contains('fm-sheet')){fmenu.hidden=true;fmenu.classList.remove('fm-sheet')}}
 bmFp.addEventListener('click',()=>fmenu.classList.remove('fm-sheet'),true);
-fpCloseup.addEventListener('click',e=>{e.stopPropagation();if(!fmenu.hidden&&fmenu.classList.contains('fm-sheet')){closeFloorSheet()}else openFloorSheet(selectedZone)});
+fpCloseup.addEventListener('click',e=>{e.stopPropagation();toggleSplit()});
 (function(){const old=document.getElementById('fpBtn8');if(!old)return;const nb=old.cloneNode(true);old.replaceWith(nb);nb.addEventListener('click',e=>{e.stopPropagation();if(!fmenu.hidden&&fmenu.classList.contains('fm-sheet')){closeFloorSheet()}else openFloorSheet(8)})})();
 document.addEventListener('click',e=>{if(fmenu.classList.contains('fm-sheet')&&!fmenu.hidden&&!fmenu.contains(e.target)&&e.target!==fpCloseup&&!e.target.closest('#fpBtn8'))closeFloorSheet()});
 /* floor choice with a real plan: leave close-up first, then open the reveal */
@@ -397,4 +424,112 @@ async function closePool(){
 poolHot.addEventListener('click',e=>{e.stopPropagation();openPool()});
 poolBack.addEventListener('click',closePool);poolVeil.addEventListener('click',closePool);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&poolOpen)closePool()});
+</script>
+<script>
+/* Floor split: after the fly-in the building dims and its floors fan out as cards (reel idea, Nov 28). */
+const floorsLayer=document.createElement('div');floorsLayer.className='floors-layer';floorsLayer.hidden=true;
+const floorsStack=document.createElement('div');floorsStack.className='floors-stack';floorsLayer.appendChild(floorsStack);
+const floorsClose=document.createElement('button');floorsClose.type='button';floorsClose.className='floors-close';floorsClose.textContent='رجوع للمبنى ←';floorsClose.hidden=true;floorsLayer.appendChild(floorsClose);
+const floorsNote=document.createElement('div');floorsNote.className='floors-note';floorsNote.hidden=true;floorsLayer.appendChild(floorsNote);
+scene.appendChild(floorsLayer);
+const planInfo=document.createElement('div');planInfo.className='plan-info';planInfo.hidden=true;scene.appendChild(planInfo);
+const SPLIT_INFO={commercial:{area:'29',price:'99,000'},hotel:{area:'45',price:'55,000'},office:{area:'48',price:'45,000'}};
+let splitOpen=false,splitZone=null,floorsNoteTimer=null;
+window.__planFromSplit=false;
+function splitFloors(n){const c=FLOOR_CATS[ZONE_CAT[n]];return c?c.floors:[]}
+function splitMeta(n){return SPLIT_INFO[ZONE_CAT[n]]||null}
+function buildSplit(n){
+ floorsStack.innerHTML='';
+ splitFloors(n).forEach(f=>{
+  const b=document.createElement('button');b.type='button';b.className='fcard';
+  const has=!!(FLOOR_PLANS[n]&&FLOOR_PLANS[n][f]);b.setAttribute('aria-disabled',has?'false':'true');
+  b.innerHTML='<span class="fdot"></span><span class="fl"></span><span class="fm2"></span>';
+  b.querySelector('.fl').textContent=f;
+  const m=splitMeta(n);b.querySelector('.fm2').textContent=m?('من '+m.area+' م² · '+m.price+' ج/م²'):'';
+  b.setAttribute('aria-label','مبنى '+n+' - الدور '+f+(has?' - المسقط متاح':' - المسقط غير متاح بعد'));
+  b.addEventListener('click',e=>{e.stopPropagation();pickFloor(n,f,b,has)});
+  floorsStack.appendChild(b);
+ });
+}
+function openSplit(n){
+ if(splitOpen||flying||!canvas.classList.contains('is-closeup')||selectedZone!==n||n===10)return;
+ if(!splitFloors(n).length)return;
+ buildSplit(n);splitOpen=true;splitZone=n;
+ scene.classList.add('is-split');floorsLayer.hidden=false;floorsClose.hidden=false;
+ note.textContent='المبنى '+n+' · اختار الدور';
+ if(!reducedMotion()){
+  const cr=closeup.getBoundingClientRect(),sr=scene.getBoundingClientRect();
+  const cx=cr.left-sr.left+cr.width/2,cy=cr.top-sr.top+cr.height/2;
+  Array.from(floorsStack.children).forEach((b,i)=>{
+   const br=b.getBoundingClientRect();
+   const dx=cx-(br.left-sr.left+br.width/2),dy=cy-(br.top-sr.top+br.height/2);
+   b.animate([{transform:'translate('+dx+'px,'+dy+'px) scale(.35)',opacity:0},{transform:'translate(0px,0px) scale(1)',opacity:1}],{duration:520,delay:60*i,easing:'cubic-bezier(.2,.75,.25,1)',fill:'backwards'});
+  });
+  floorsClose.animate([{opacity:0},{opacity:1}],{duration:300,delay:250,fill:'backwards'});
+ }
+}
+function closeSplit(){if(!splitOpen)return;splitOpen=false;splitZone=null;scene.classList.remove('is-split');floorsLayer.hidden=true;floorsClose.hidden=true;floorsNote.hidden=true;clearTimeout(floorsNoteTimer);if(selectedZone)note.textContent='المبنى '+selectedZone+' · صورة مقربة · الترقيم مبدئي'}
+function toggleSplit(){if(splitOpen)closeSplit();else if(selectedZone&&selectedZone!==10)openSplit(selectedZone)}
+function pickFloor(n,f,card,has){
+ if(!has){floorsNote.textContent='مسقط الدور ده مش متاح لسه';floorsNote.hidden=false;clearTimeout(floorsNoteTimer);floorsNoteTimer=setTimeout(()=>{floorsNote.hidden=true},2400);return}
+ openPlanOverlay(n,f,card);
+}
+function overlayTarget(){const sr=scene.getBoundingClientRect();const maxH=sr.height-170,maxW=sr.width-24;let W,H;if(maxW/PLAN_RATIO>maxH){H=maxH;W=H*PLAN_RATIO}else{W=maxW;H=W/PLAN_RATIO}
+ return {sr:sr,to:{left:(sr.width-W)/2+'px',top:Math.max(50,(sr.height-H)/2-26)+'px',width:W+'px',height:H+'px'}}}
+async function openPlanOverlay(n,f,card){
+ if(planOpen||planBusy)return;planBusy=true;window.__planFromSplit=true;
+ zoneTip.hidden=true;invHover.hidden=true;bmenu.hidden=true;
+ planImg.src=PLAN_SRC;planImg.alt='مسقط أفقي - مبنى '+n+' - '+f;
+ planInfo.innerHTML='';
+ const m=splitMeta(n);
+ const t=document.createElement('span');t.textContent='مبنى '+n+' · '+f+(m?' · المساحات من '+m.area+' م² · سعر المتر من '+m.price+' ج':'');planInfo.appendChild(t);
+ const q=document.createElement('a');q.href='./?v=5&building='+encodeURIComponent(n);q.textContent='عرض السعر ↗';planInfo.appendChild(q);
+ const o=overlayTarget(),cr=card.getBoundingClientRect(),sr=o.sr;
+ const from={left:(cr.left-sr.left)+'px',top:(cr.top-sr.top)+'px',width:cr.width+'px',height:cr.height+'px'};
+ planVeil.hidden=false;planCard.hidden=false;Object.assign(planCard.style,o.to);
+ backPlan.hidden=true;floorsClose.hidden=true;
+ planInfo.style.left='50%';planInfo.style.transform='translateX(-50%)';
+ planInfo.style.top=(parseFloat(o.to.top)+parseFloat(o.to.height)+12)+'px';
+ if(!reducedMotion()){
+  const a=planVeil.animate([{opacity:0},{opacity:.72}],{duration:450,fill:'forwards'});
+  const c=planCard.animate([Object.assign({opacity:0},from),Object.assign({opacity:1},o.to)],{duration:620,easing:'cubic-bezier(.2,.7,.2,1)',fill:'both'});
+  const ia=planInfo.animate([{opacity:0},{opacity:1}],{duration:350,delay:260,fill:'backwards'});
+  try{await Promise.all([a.finished,c.finished,ia.finished])}catch(e){}
+  a.commitStyles();c.commitStyles();a.cancel();c.cancel();ia.cancel();
+ }
+ planVeil.style.opacity='.72';planCard.style.opacity='1';planInfo.hidden=false;
+ planClose.textContent='رجوع للأدوار ←';planClose.hidden=false;planOpen=true;planBusy=false;planClose.focus();
+}
+async function __closePlanOverlay(){
+ if(!planOpen||planBusy)return;planBusy=true;planClose.hidden=true;planInfo.hidden=true;
+ if(!reducedMotion()){
+  const c=planCard.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(.85)'}],{duration:380,easing:'ease-in',fill:'forwards'});
+  const a=planVeil.animate([{opacity:.72},{opacity:0}],{duration:380,fill:'forwards'});
+  try{await Promise.all([a.finished,c.finished])}catch(e){}
+  a.cancel();c.cancel();
+ }
+ planVeil.hidden=true;planCard.hidden=true;planVeil.style.opacity='0';planCard.style.opacity='0';planCard.style.transform='';
+ planClose.textContent='رجوع للماستر بلان ←';planOpen=false;planBusy=false;window.__planFromSplit=false;
+ if(canvas.classList.contains('is-closeup'))backPlan.hidden=false;
+ if(splitOpen)floorsClose.hidden=false;
+}
+floorsClose.addEventListener('click',closeSplit);
+closeup.addEventListener('click',()=>{if(splitOpen)closeSplit()});
+/* leaving the close-up (flight or masterplan) always drops the split first */
+const __cinematicToZone=cinematicToZone;
+cinematicToZone=function(n){closeSplit();return __cinematicToZone(n)};
+const __showMasterplan=showMasterplan;
+showMasterplan=function(){closeSplit();__showMasterplan()};
+/* auto-split once the close-up image is ready */
+window.__afterShowImageReady=function(){
+ if(!selectedZone||selectedZone===10||flying||scene.classList.contains('is-playing'))return;
+ if(reducedMotion()){openSplit(selectedZone);return}
+ setTimeout(()=>{if(selectedZone&&selectedZone!==10&&!flying&&canvas.classList.contains('is-closeup')&&!scene.classList.contains('is-playing')&&!splitOpen)openSplit(selectedZone)},330);
+};
+/* Escape: plan overlay first, then split; capture so the older handlers don't fire */
+document.addEventListener('keydown',e=>{
+ if(e.key!=='Escape')return;
+ if(window.__planFromSplit&&planOpen){e.stopPropagation();e.preventDefault();__closePlanOverlay();return}
+ if(splitOpen){e.stopPropagation();e.preventDefault();closeSplit()}
+},true);
 </script></body></html>
