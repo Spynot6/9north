@@ -96,6 +96,12 @@
 .plan-info{position:absolute;z-index:8;display:flex;align-items:center;gap:14px;background:#f2ecdf;color:#27372b;border:1px solid #e1c296;border-radius:6px;padding:10px 16px;font-size:12px;direction:rtl;box-shadow:0 6px 24px #0007;white-space:nowrap}
 .plan-info a{border:1px solid #293c2c;background:#293c2c;color:#fff;border-radius:4px;padding:8px 13px;font-size:11px;white-space:nowrap}
 .plan-info a:hover{background:#3a5238}
+
+.fl-hl{position:absolute;z-index:4;pointer-events:none;background-repeat:no-repeat;background-size:100% 100%;filter:brightness(1.22) saturate(1.1);opacity:0;transition:opacity .3s ease}
+.fl-hl.on{opacity:1}
+.fl-hl::after{content:"";position:absolute;inset:0;border-top:2px solid #f0cf94;border-bottom:2px solid #f0cf94;background:linear-gradient(#f0cf9433,#f0cf9414);box-shadow:0 0 26px #f0cf94cc,inset 0 0 22px #f0cf9477}
+.fcard.is-active{background:#fff2d6;border-color:#f0cf94;box-shadow:0 0 0 2px #f0cf94,0 6px 24px #0008}
+.fcard.is-active .fdot{box-shadow:0 0 12px #ffd98f}
 @media(max-width:850px){
 .floors-stack{right:auto;left:50%;top:auto;bottom:118px;transform:translateX(-50%)}
 .fcard{width:min(250px,74vw);padding:9px 13px}
@@ -468,11 +474,30 @@ function openSplit(n){
   floorsClose.animate([{opacity:0},{opacity:1}],{duration:300,delay:250,fill:'backwards'});
  }
 }
-function closeSplit(){if(!splitOpen)return;splitOpen=false;splitZone=null;scene.classList.remove('is-split');floorsLayer.hidden=true;floorsClose.hidden=true;floorsNote.hidden=true;clearTimeout(floorsNoteTimer);if(selectedZone)note.textContent='المبنى '+selectedZone+' · صورة مقربة · الترقيم مبدئي'}
+function closeSplit(){if(!splitOpen)return;clearFloorLight();splitOpen=false;splitZone=null;scene.classList.remove('is-split');floorsLayer.hidden=true;floorsClose.hidden=true;floorsNote.hidden=true;clearTimeout(floorsNoteTimer);if(selectedZone)note.textContent='المبنى '+selectedZone+' · صورة مقربة · الترقيم مبدئي'}
 function toggleSplit(){if(splitOpen)closeSplit();else if(selectedZone&&selectedZone!==10)openSplit(selectedZone)}
+
+/* Floor highlight: lights the chosen floor band on the building render (approximate band per building) */
+const FLOOR_BAND={1:[.28,.86],2:[.28,.86],3:[.31,.87],4:[.05,.92],5:[.09,.77],6:[.03,.9],7:[.2,.87],8:[.33,.86],9:[.25,.87]};
+const flHl=document.createElement('div');flHl.className='fl-hl';flHl.hidden=true;floorsLayer.appendChild(flHl);
+let flActive=null;
+function lightFloor(n,f,card){
+ const list=splitFloors(n),i=list.indexOf(f),N=list.length,bd=FLOOR_BAND[n];if(i<0||!bd)return;
+ const cr=closeup.getBoundingClientRect(),sr=scene.getBoundingClientRect();
+ const t=bd[0],b=bd[1],h=b-t,top=b-h*(i+1)/N,bot=b-h*i/N;
+ flHl.style.backgroundImage='url("'+(closeup.currentSrc||closeup.src)+'")';
+ flHl.style.backgroundSize=cr.width+'px '+cr.height+'px';
+ flHl.style.backgroundPosition='0 '+(-top*cr.height)+'px';
+ flHl.style.left=(cr.left-sr.left)+'px';flHl.style.width=cr.width+'px';
+ flHl.style.top=(cr.top-sr.top+top*cr.height)+'px';flHl.style.height=((bot-top)*cr.height)+'px';
+ flHl.hidden=false;void flHl.offsetWidth;flHl.classList.add('on');
+ Array.from(floorsStack.children).forEach(c=>c.classList.toggle('is-active',c===card));flActive=f;
+}
+function clearFloorLight(){flHl.classList.remove('on');flHl.hidden=true;flActive=null;Array.from(floorsStack.children).forEach(c=>c.classList.remove('is-active'))}
 function pickFloor(n,f,card,has){
+ lightFloor(n,f,card);
  if(!has){floorsNote.textContent='مسقط الدور ده مش متاح لسه';floorsNote.hidden=false;clearTimeout(floorsNoteTimer);floorsNoteTimer=setTimeout(()=>{floorsNote.hidden=true},2400);return}
- openPlanOverlay(n,f,card);
+ setTimeout(()=>{if(splitOpen&&flActive===f)openPlanOverlay(n,f,card)},reducedMotion()?0:650);
 }
 function overlayTarget(){const sr=scene.getBoundingClientRect();const maxH=sr.height-170,maxW=sr.width-24;let W,H;if(maxW/PLAN_RATIO>maxH){H=maxH;W=H*PLAN_RATIO}else{W=maxW;H=W/PLAN_RATIO}
  return {sr:sr,to:{left:(sr.width-W)/2+'px',top:Math.max(50,(sr.height-H)/2-26)+'px',width:W+'px',height:H+'px'}}}
