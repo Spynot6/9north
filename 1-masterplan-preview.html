@@ -522,9 +522,14 @@ const __showMasterplan=showMasterplan;
 showMasterplan=function(){closeSplit();__showMasterplan()};
 /* auto-split once the close-up image is ready */
 window.__afterShowImageReady=function(){
- if(!selectedZone||selectedZone===10||flying||scene.classList.contains('is-playing'))return;
- if(reducedMotion()){openSplit(selectedZone);return}
- setTimeout(()=>{if(selectedZone&&selectedZone!==10&&!flying&&canvas.classList.contains('is-closeup')&&!scene.classList.contains('is-playing')&&!splitOpen)openSplit(selectedZone)},330);
+ if(!selectedZone||selectedZone===10||scene.classList.contains('is-playing'))return;
+ const n=selectedZone;let tries=0;
+ const attempt=()=>{
+  if(splitOpen||selectedZone!==n||!canvas.classList.contains('is-closeup')||scene.classList.contains('is-playing'))return;
+  if(flying){if(++tries<30)setTimeout(attempt,120);return}
+  openSplit(n);
+ };
+ setTimeout(attempt,reducedMotion()?0:330);
 };
 /* Escape: plan overlay first, then split; capture so the older handlers don't fire */
 document.addEventListener('keydown',e=>{
